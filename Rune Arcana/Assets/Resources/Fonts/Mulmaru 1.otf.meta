@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 47be95995333b954b9c987297f0d08bd
+guid: e4dfc97f08383814f840f9bc299d395d
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -10,8 +10,7 @@ TrueTypeFontImporter:
   includeFontData: 1
   fontNames:
   - Mulmaru
-  fallbackFontReferences:
-  - {fileID: 12800000, guid: 03d16001b4213eb44848c2dc30e88e21, type: 3}
+  fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
   ascentCalculationMode: 1

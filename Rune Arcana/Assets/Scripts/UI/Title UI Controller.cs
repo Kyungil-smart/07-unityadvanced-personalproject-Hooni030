@@ -51,7 +51,7 @@ public class TitleUIController : MonoBehaviour
             default:
                 if (_currentPage == button)
                 {
-                    UIUpdate(true, false, 0, 0);
+                    UIUpdate(true, false, -1, 0);
                     _currentPage = -1;
                     _firstClick = false;
                 }
@@ -76,7 +76,6 @@ public class TitleUIController : MonoBehaviour
                 }
                 break;
         }
-        Debug.Log($"{_currentPage} : {button}");
     }
 
     // 실제 파라미터 변경 함수
