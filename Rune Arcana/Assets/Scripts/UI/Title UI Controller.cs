@@ -6,15 +6,17 @@ using Debug = UnityEngine.Debug;
 
 public class TitleUIController : MonoBehaviour
 {
+    // 파라미터 문자열 해싱
+    private static readonly int PageDir = Animator.StringToHash("PageDir");
+    private static readonly int Index = Animator.StringToHash("Index");
+    private static readonly int Canceled = Animator.StringToHash("Canceled");
+    private static readonly int Selected = Animator.StringToHash("Selected");
+
     [SerializeField] private Animator ButtonsAnimator;
     [SerializeField] private Image Book;
     [SerializeField] private Animator BookAnimator;
 
-    private bool isCanceled = true;
-    private bool isSelected = false;
-
-    private bool isPressed = false;
-
+    private bool _firstClick = false;
     private int _currentPage = -1;
     
     private void Awake()
@@ -23,66 +25,60 @@ public class TitleUIController : MonoBehaviour
         BookAnimator = Book.GetComponent<Animator>();
     }
 
-    private void Update()
-    {
-        BookAnimator.SetInteger("PageDir", 0);
-    }
-
     public void OnClick(int button)
     {
         ChangeBookState(button);
     }
 
-    private void ChangeBookState(int page)
+    private void ChangeBookState(int button)
     {
-        switch(page)
+        switch(button)
         {
             case 0:
-                UIUpdate(true, false, 0, page);
+                UIUpdate(true, false, 0, button);
                 _currentPage = 0;
                 GameSceneManager.Instance.ChangeScene((int)SceneIndex.Tutorial);
                 break;
             case 3 :
-                UIUpdate(true, false, 0, page);
+                UIUpdate(true, false, 0, button);
                 GameSceneManager.Instance.GameQuit();
                 break;
             default:
-                StartCoroutine(PageCoroutine(page));
-                if (_currentPage == page)
+                if (_currentPage == button)
                 {
-                    UIUpdate(!isCanceled, !isSelected, 0, page);
-                    isCanceled = !isCanceled;
-                    isSelected = !isSelected;
+                    UIUpdate(true, false, 0, 0);
+                    _currentPage = -1;
+                    _firstClick = false;
                 }
-                else if (_currentPage < page)
+                else if (_currentPage < button)
                 {
-                    UIUpdate(false, true, 1, page);
-                    Debug.Log($"{_currentPage}, {page}");
+                    if(!_firstClick)
+                    {
+                        UIUpdate(false, true, 0, button);
+                        _currentPage = -1;
+                        _firstClick = true;
+                    }
+                    else
+                    {
+                        UIUpdate(false, true, 1, button);
+                        _currentPage = button;
+                    }
                 }
-                else if (_currentPage > page)
+                else if (_currentPage > button)
                 {
-                    UIUpdate(false, true, -1, page);
-                    Debug.Log($"{_currentPage}, {page}");
+                    UIUpdate(false, true, -1, button);
+                    _currentPage = button;
                 }
                 break;
         }
-        
-        _currentPage = page;
+        Debug.Log($"{_currentPage} : {button}");
     }
 
     private void UIUpdate(bool canceled, bool selected, int dir, int index)
     {
-        ButtonsAnimator.SetInteger("Index", index);
-        
-        BookAnimator.SetInteger("PageDir", dir);
-        BookAnimator.SetBool("Canceled", canceled);
-        BookAnimator.SetBool("Selected", selected);
-    }
-
-    private IEnumerator PageCoroutine(int page)
-    {
-        yield return new WaitUntil(() => isPressed);
-        UIUpdate(false, true, -1, page);
-        
+        ButtonsAnimator.SetInteger(Index, index);
+        BookAnimator.SetInteger(PageDir, dir);
+        BookAnimator.SetBool(Canceled, canceled);
+        BookAnimator.SetBool(Selected, selected);
     }
 }
