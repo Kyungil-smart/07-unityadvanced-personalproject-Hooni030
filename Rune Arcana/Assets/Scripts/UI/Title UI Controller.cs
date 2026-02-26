@@ -25,11 +25,16 @@ public class TitleUIController : MonoBehaviour
         BookAnimator = Book.GetComponent<Animator>();
     }
 
+    // 버튼 클릭시 실행
     public void OnClick(int button)
     {
         ChangeBookState(button);
     }
 
+    /// <summary>
+    /// 버튼 클릭 시 버튼 이미지 전환, 책 넘기는 애니메이션 전환, 씬 변경, 게임 종료
+    /// </summary>
+    /// <param name="button"></param>
     private void ChangeBookState(int button)
     {
         switch(button)
@@ -74,6 +79,7 @@ public class TitleUIController : MonoBehaviour
         Debug.Log($"{_currentPage} : {button}");
     }
 
+    // 실제 파라미터 변경 함수
     private void UIUpdate(bool canceled, bool selected, int dir, int index)
     {
         ButtonsAnimator.SetInteger(Index, index);
