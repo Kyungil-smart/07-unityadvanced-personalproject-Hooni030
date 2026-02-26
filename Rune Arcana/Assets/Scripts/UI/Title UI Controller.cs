@@ -51,31 +51,32 @@ public class TitleUIController : MonoBehaviour
             default:
                 if (_currentPage == button)
                 {
-                    UIUpdate(true, false, -1, 0);
+                    UIUpdate(true, false, 0, 0);
                     _currentPage = -1;
                     _firstClick = false;
+                    return;
                 }
-                else if (_currentPage < button)
+
+                if (_currentPage < button)
                 {
                     if(!_firstClick)
                     {
                         UIUpdate(false, true, 0, button);
-                        _currentPage = -1;
                         _firstClick = true;
                     }
                     else
                     {
                         UIUpdate(false, true, 1, button);
-                        _currentPage = button;
                     }
                 }
                 else if (_currentPage > button)
                 {
                     UIUpdate(false, true, -1, button);
-                    _currentPage = button;
                 }
                 break;
         }
+        _currentPage = button;
+        Debug.Log($"{_currentPage} : {button}");
     }
 
     // 실제 파라미터 변경 함수
