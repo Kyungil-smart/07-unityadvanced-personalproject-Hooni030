@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 03d16001b4213eb44848c2dc30e88e21
+guid: 43c7f434ce6457f4faef3667a0d86f96
 TrueTypeFontImporter:
   externalObjects: {}
   serializedVersion: 4
@@ -9,7 +9,7 @@ TrueTypeFontImporter:
   characterPadding: 1
   includeFontData: 1
   fontNames:
-  - Mulmaru
+  - KERIS KEDU
   fallbackFontReferences: []
   customCharacters: 
   fontRenderingMode: 0
