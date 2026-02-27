@@ -77,6 +77,7 @@ public class TitleUIController : MonoBehaviour
         }
         _currentPage = button;
         Debug.Log($"{_currentPage} : {button}");
+        
     }
 
     // 실제 파라미터 변경 함수
@@ -87,4 +88,6 @@ public class TitleUIController : MonoBehaviour
         BookAnimator.SetBool(Canceled, canceled);
         BookAnimator.SetBool(Selected, selected);
     }
+    
+    
 }

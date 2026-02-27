@@ -118,6 +118,15 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""Anykey"",
+                    ""type"": ""Button"",
+                    ""id"": ""83bd020a-928f-4b27-83bf-4260f0a810bb"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -177,72 +186,6 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": true
                 },
                 {
-                    ""name"": ""ARROWS"",
-                    ""id"": ""76996d01-1e63-4f71-abbe-28b696c83dbd"",
-                    ""path"": ""2DVector"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": true,
-                    ""isPartOfComposite"": false
-                },
-                {
-                    ""name"": ""up"",
-                    ""id"": ""8f602bf2-74d8-4e4b-8256-5b8a914d1820"",
-                    ""path"": ""<Keyboard>/upArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""down"",
-                    ""id"": ""ce5136ec-60ba-493b-b890-e519aad98265"",
-                    ""path"": ""<Keyboard>/downArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""left"",
-                    ""id"": ""01133cd2-7a36-4e31-9aa3-a7ff686f3506"",
-                    ""path"": ""<Keyboard>/leftArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": ""right"",
-                    ""id"": ""1215a109-8a5c-46d6-94d8-cc3ae6d65be2"",
-                    ""path"": ""<Keyboard>/rightArrow"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Move"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": true
-                },
-                {
-                    ""name"": """",
-                    ""id"": ""541da0a8-402d-48bf-a9cd-7d17c19db0ab"",
-                    ""path"": ""<Keyboard>/z"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""Attack"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": """",
                     ""id"": ""825e0310-02fd-4259-aa41-e22269fd3b4c"",
                     ""path"": ""<Mouse>/leftButton"",
@@ -255,8 +198,8 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""d0c20cd7-27ca-46fc-a10d-5015f6f4df28"",
-                    ""path"": ""<Keyboard>/x"",
+                    ""id"": ""c28ec493-6b19-4f64-964e-44f56fd856ab"",
+                    ""path"": ""<Mouse>/rightButton"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -266,12 +209,12 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
                 },
                 {
                     ""name"": """",
-                    ""id"": ""c28ec493-6b19-4f64-964e-44f56fd856ab"",
-                    ""path"": ""<Mouse>/rightButton"",
+                    ""id"": ""b3ad85b4-87d5-40dc-b5c5-1ca3bc6ebdb0"",
+                    ""path"": ""<Keyboard>/anyKey"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill_1"",
+                    ""action"": ""Anykey"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -302,6 +245,7 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
         m_Player_Skill_1 = m_Player.FindAction("Skill_1", throwIfNotFound: true);
+        m_Player_Anykey = m_Player.FindAction("Anykey", throwIfNotFound: true);
     }
 
     ~@Player_Actions()
@@ -385,6 +329,7 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Attack;
     private readonly InputAction m_Player_Skill_1;
+    private readonly InputAction m_Player_Anykey;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -408,6 +353,10 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Skill_1".
         /// </summary>
         public InputAction @Skill_1 => m_Wrapper.m_Player_Skill_1;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/Anykey".
+        /// </summary>
+        public InputAction @Anykey => m_Wrapper.m_Player_Anykey;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -443,6 +392,9 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
             @Skill_1.started += instance.OnSkill_1;
             @Skill_1.performed += instance.OnSkill_1;
             @Skill_1.canceled += instance.OnSkill_1;
+            @Anykey.started += instance.OnAnykey;
+            @Anykey.performed += instance.OnAnykey;
+            @Anykey.canceled += instance.OnAnykey;
         }
 
         /// <summary>
@@ -463,6 +415,9 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
             @Skill_1.started -= instance.OnSkill_1;
             @Skill_1.performed -= instance.OnSkill_1;
             @Skill_1.canceled -= instance.OnSkill_1;
+            @Anykey.started -= instance.OnAnykey;
+            @Anykey.performed -= instance.OnAnykey;
+            @Anykey.canceled -= instance.OnAnykey;
         }
 
         /// <summary>
@@ -537,5 +492,12 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnSkill_1(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "Anykey" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnAnykey(InputAction.CallbackContext context);
     }
 }

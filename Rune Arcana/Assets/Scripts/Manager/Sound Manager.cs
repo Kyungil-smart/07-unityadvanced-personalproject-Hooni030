@@ -1,16 +1,28 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class SoundManager : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public static SoundManager Instance { get; private set; }
+
+    private void Awake()
     {
-        
+        if (Instance != null && Instance != this)
+        {
+            Destroy(this.gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
     }
 
-    // Update is called once per frame
-    void Update()
+    // SFX(효과음) 재생
+    public void PlaySound(AudioSource source, float volume)
     {
-        
+        if (source == null) return;
+        source.volume = volume;
+        source.Play();
     }
 }
