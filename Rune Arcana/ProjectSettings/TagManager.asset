@@ -3,7 +3,8 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 3
-  tags: []
+  tags:
+  - Enemies
   layers:
   - Default
   - TransparentFX
@@ -44,13 +45,13 @@ TagManager:
   - name: BackGround
     uniqueID: 1103465157
     locked: 0
+  - name: Props
+    uniqueID: 2071846441
+    locked: 0
   - name: Player
     uniqueID: 1782437177
     locked: 0
-  - name: New Layer 3
-    uniqueID: 2071846441
-    locked: 0
-  - name: New Layer 4
+  - name: Temp
     uniqueID: 1874965767
     locked: 0
   m_RenderingLayers:

@@ -27,15 +27,15 @@ public class ChangScene : MonoBehaviour
         TurnOnScene();
     }
 
-    private void TurnOnScene()
+    public void TurnOnScene()
     {
         StartCoroutine(OnScene(_inTime));
     }
 
-    public void TurnOffScene()
+    public void TurnOffScene(int index)
     {
         _canvas.sortingOrder = 10;
-        StartCoroutine(OffScene(_outTime));
+        StartCoroutine(OffScene(_outTime, index));
     }
     
     private void OnDisable()
@@ -43,12 +43,17 @@ public class ChangScene : MonoBehaviour
         StopAllCoroutines();
     }
 
-    private IEnumerator OffScene(float time)
+    private IEnumerator OffScene(float time, int index = 0)
     {
         _canvas.sortingOrder = 10;
         _animator.SetBool(Out, true);
         yield return new WaitForSeconds(time);
-        GameSceneManager.Instance.ChangeScene((int)SceneIndex.Tutorial);
+        if(index == -1)
+        {
+            GameSceneManager.Instance.GameQuit();
+            yield return null;
+        }
+        GameSceneManager.Instance.ChangeScene(index);
     }
 
     private IEnumerator OnScene(float time)

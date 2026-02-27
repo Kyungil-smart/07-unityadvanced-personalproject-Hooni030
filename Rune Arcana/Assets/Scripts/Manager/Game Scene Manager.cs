@@ -46,7 +46,7 @@ public class GameSceneManager : MonoBehaviour
 public enum SceneIndex
 {
     TitleScene,
-    Tutorial,
+    Town,
     Stage1,
     Stage2,
     Stage3,

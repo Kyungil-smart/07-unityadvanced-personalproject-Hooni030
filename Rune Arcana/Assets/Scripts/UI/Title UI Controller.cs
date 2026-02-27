@@ -48,7 +48,6 @@ public class TitleUIController : MonoBehaviour
                 break;
             case 3 :
                 UIUpdate(true, false, 0, button);
-                GameSceneManager.Instance.GameQuit();
                 break;
             default:
                 if (_currentPage == button)
