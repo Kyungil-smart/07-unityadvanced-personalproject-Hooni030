@@ -19,10 +19,19 @@ public class SoundManager : MonoBehaviour
     }
 
     // SFX(효과음) 재생
-    public void PlaySound(AudioSource source, float volume)
+    public void PlayAmbient(AudioSource source, float volume = 1.0f, float pitch = 1.0f)
     {
         if (source == null) return;
         source.volume = volume;
+        source.pitch = pitch;
         source.Play();
+    }
+
+    public void PlaySFX(AudioSource source, float volume = 1.0f, float pitch = 1.0f)
+    {
+        if (source == null) return;
+        source.volume = volume;
+        source.pitch = pitch;
+        source.PlayOneShot(source.clip);
     }
 }

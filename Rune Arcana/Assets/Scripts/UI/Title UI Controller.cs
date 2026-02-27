@@ -15,12 +15,15 @@ public class TitleUIController : MonoBehaviour
     [SerializeField] private Animator ButtonsAnimator;
     [SerializeField] private Image Book;
     [SerializeField] private Animator BookAnimator;
+    
+    private AudioSource _audioSource;
 
     private bool _firstClick = false;
     private int _currentPage = -1;
     
     private void Awake()
     {
+        _audioSource = GetComponent<AudioSource>();
         ButtonsAnimator = GetComponent<Animator>();
         BookAnimator = Book.GetComponent<Animator>();
     }
@@ -42,7 +45,6 @@ public class TitleUIController : MonoBehaviour
             case 0:
                 UIUpdate(true, false, 0, button);
                 _currentPage = 0;
-                GameSceneManager.Instance.ChangeScene((int)SceneIndex.Tutorial);
                 break;
             case 3 :
                 UIUpdate(true, false, 0, button);
@@ -67,17 +69,17 @@ public class TitleUIController : MonoBehaviour
                     else
                     {
                         UIUpdate(false, true, 1, button);
+                        SoundManager.Instance.PlaySFX(_audioSource, 1.5f);
                     }
                 }
                 else if (_currentPage > button)
                 {
                     UIUpdate(false, true, -1, button);
+                    SoundManager.Instance.PlaySFX(_audioSource,1.5f);
                 }
                 break;
         }
         _currentPage = button;
-        Debug.Log($"{_currentPage} : {button}");
-        
     }
 
     // 실제 파라미터 변경 함수
@@ -88,6 +90,4 @@ public class TitleUIController : MonoBehaviour
         BookAnimator.SetBool(Canceled, canceled);
         BookAnimator.SetBool(Selected, selected);
     }
-    
-    
 }
