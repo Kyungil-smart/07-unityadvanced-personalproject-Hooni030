@@ -10,36 +10,36 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Mulmaru SDF
+  m_Name: KERISKEDU_R SDF 1
   m_EditorClassIdentifier: Unity.TextMeshPro::TMPro.TMP_FontAsset
   m_Version: 1.1.0
   m_FaceInfo:
     m_FaceIndex: 0
-    m_FamilyName: Mulmaru
-    m_StyleName: regular
+    m_FamilyName: KERIS KEDU
+    m_StyleName: R
     m_PointSize: 90
     m_Scale: 1
-    m_UnitsPerEM: 192
-    m_LineHeight: 119.99999
-    m_AscentLine: 74.99999
+    m_UnitsPerEM: 1000
+    m_LineHeight: 118.350006
+    m_AscentLine: 80.55
     m_CapLine: 68
-    m_MeanLine: 45
+    m_MeanLine: 47
     m_Baseline: 0
-    m_DescentLine: -14.999999
-    m_SuperscriptOffset: 74.99999
+    m_DescentLine: -37.800003
+    m_SuperscriptOffset: 80.55
     m_SuperscriptSize: 0.5
-    m_SubscriptOffset: -14.999999
+    m_SubscriptOffset: -37.800003
     m_SubscriptSize: 0.5
-    m_UnderlineOffset: -71.25
-    m_UnderlineThickness: 23.906248
-    m_StrikethroughOffset: 18
-    m_StrikethroughThickness: 23.906248
-    m_TabWidth: 30
-  m_Material: {fileID: 3713714932624711269}
-  m_SourceFontFileGUID: e4dfc97f08383814f840f9bc299d395d
+    m_UnderlineOffset: -11.25
+    m_UnderlineThickness: 4.5
+    m_StrikethroughOffset: 18.8
+    m_StrikethroughThickness: 4.5
+    m_TabWidth: 22
+  m_Material: {fileID: 3152778596190436298}
+  m_SourceFontFileGUID: 43c7f434ce6457f4faef3667a0d86f96
   m_CreationSettings:
     sourceFontFileName: 
-    sourceFontFileGUID: e4dfc97f08383814f840f9bc299d395d
+    sourceFontFileGUID: 43c7f434ce6457f4faef3667a0d86f96
     faceIndex: 0
     pointSizeSamplingMode: 0
     pointSize: 90
@@ -56,14 +56,14 @@ MonoBehaviour:
     fontStyleModifier: 0
     renderMode: 4165
     includeFontFeatures: 0
-  m_SourceFontFile: {fileID: 12800000, guid: e4dfc97f08383814f840f9bc299d395d, type: 3}
+  m_SourceFontFile: {fileID: 12800000, guid: 43c7f434ce6457f4faef3667a0d86f96, type: 3}
   m_SourceFontFilePath: 
   m_AtlasPopulationMode: 1
   InternalDynamicOS: 0
   m_GlyphTable: []
   m_CharacterTable: []
   m_AtlasTextures:
-  - {fileID: 3129154772584879639}
+  - {fileID: 8679272677740731586}
   m_AtlasTextureIndex: 0
   m_IsMultiAtlasTexturesEnabled: 0
   m_GetFontFeatures: 1
@@ -141,60 +141,14 @@ MonoBehaviour:
     kerningPairs: []
   fallbackFontAssets: []
   atlas: {fileID: 0}
---- !u!28 &3129154772584879639
-Texture2D:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_Name: Mulmaru 1 Atlas
-  m_ImageContentsHash:
-    serializedVersion: 2
-    Hash: 00000000000000000000000000000000
-  m_IsAlphaChannelOptional: 0
-  serializedVersion: 4
-  m_Width: 1
-  m_Height: 1
-  m_CompleteImageSize: 1
-  m_MipsStripped: 0
-  m_TextureFormat: 1
-  m_MipCount: 1
-  m_IsReadable: 1
-  m_IsPreProcessed: 0
-  m_IgnoreMipmapLimit: 1
-  m_MipmapLimitGroupName: 
-  m_StreamingMipmaps: 0
-  m_StreamingMipmapsPriority: 0
-  m_VTOnly: 0
-  m_AlphaIsTransparency: 0
-  m_ImageCount: 1
-  m_TextureDimension: 2
-  m_TextureSettings:
-    serializedVersion: 2
-    m_FilterMode: 1
-    m_Aniso: 1
-    m_MipBias: 0
-    m_WrapU: 0
-    m_WrapV: 0
-    m_WrapW: 0
-  m_LightmapFormat: 0
-  m_ColorSpace: 1
-  m_PlatformBlob: 
-  image data: 1
-  _typelessdata: 00
-  m_StreamData:
-    serializedVersion: 2
-    offset: 0
-    size: 0
-    path: 
---- !u!21 &3713714932624711269
+--- !u!21 &3152778596190436298
 Material:
   serializedVersion: 8
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mulmaru 1 Atlas Material
+  m_Name: KERISKEDU_R Atlas Material
   m_Shader: {fileID: 4800000, guid: 68e6db2ebdc24f95958faec2be5558d6, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -223,7 +177,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _MainTex:
-        m_Texture: {fileID: 3129154772584879639}
+        m_Texture: {fileID: 8679272677740731586}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _OutlineTex:
@@ -296,3 +250,49 @@ Material:
     - _UnderlayColor: {r: 0, g: 0, b: 0, a: 0.5}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
+--- !u!28 &8679272677740731586
+Texture2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_Name: KERISKEDU_R Atlas
+  m_ImageContentsHash:
+    serializedVersion: 2
+    Hash: 00000000000000000000000000000000
+  m_IsAlphaChannelOptional: 0
+  serializedVersion: 4
+  m_Width: 1
+  m_Height: 1
+  m_CompleteImageSize: 1
+  m_MipsStripped: 0
+  m_TextureFormat: 1
+  m_MipCount: 1
+  m_IsReadable: 1
+  m_IsPreProcessed: 0
+  m_IgnoreMipmapLimit: 1
+  m_MipmapLimitGroupName: 
+  m_StreamingMipmaps: 0
+  m_StreamingMipmapsPriority: 0
+  m_VTOnly: 0
+  m_AlphaIsTransparency: 0
+  m_ImageCount: 1
+  m_TextureDimension: 2
+  m_TextureSettings:
+    serializedVersion: 2
+    m_FilterMode: 1
+    m_Aniso: 1
+    m_MipBias: 0
+    m_WrapU: 0
+    m_WrapV: 0
+    m_WrapW: 0
+  m_LightmapFormat: 0
+  m_ColorSpace: 1
+  m_PlatformBlob: 
+  image data: 1
+  _typelessdata: 00
+  m_StreamData:
+    serializedVersion: 2
+    offset: 0
+    size: 0
+    path: 

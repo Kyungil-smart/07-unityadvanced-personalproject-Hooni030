@@ -6,15 +6,17 @@ using Debug = UnityEngine.Debug;
 
 public class TitleUIController : MonoBehaviour
 {
+    // 파라미터 문자열 해싱
+    private static readonly int PageDir = Animator.StringToHash("PageDir");
+    private static readonly int Index = Animator.StringToHash("Index");
+    private static readonly int Canceled = Animator.StringToHash("Canceled");
+    private static readonly int Selected = Animator.StringToHash("Selected");
+
     [SerializeField] private Animator ButtonsAnimator;
     [SerializeField] private Image Book;
     [SerializeField] private Animator BookAnimator;
 
-    private bool isCanceled = true;
-    private bool isSelected = false;
-
-    private bool isPressed = false;
-
+    private bool _firstClick = false;
     private int _currentPage = -1;
     
     private void Awake()
@@ -23,66 +25,69 @@ public class TitleUIController : MonoBehaviour
         BookAnimator = Book.GetComponent<Animator>();
     }
 
-    private void Update()
-    {
-        BookAnimator.SetInteger("PageDir", 0);
-    }
-
+    // 버튼 클릭시 실행
     public void OnClick(int button)
     {
         ChangeBookState(button);
     }
 
-    private void ChangeBookState(int page)
+    /// <summary>
+    /// 버튼 클릭 시 버튼 이미지 전환, 책 넘기는 애니메이션 전환, 씬 변경, 게임 종료
+    /// </summary>
+    /// <param name="button"></param>
+    private void ChangeBookState(int button)
     {
-        switch(page)
+        switch(button)
         {
             case 0:
-                UIUpdate(true, false, 0, page);
+                UIUpdate(true, false, 0, button);
                 _currentPage = 0;
                 GameSceneManager.Instance.ChangeScene((int)SceneIndex.Tutorial);
                 break;
             case 3 :
-                UIUpdate(true, false, 0, page);
+                UIUpdate(true, false, 0, button);
                 GameSceneManager.Instance.GameQuit();
                 break;
             default:
-                StartCoroutine(PageCoroutine(page));
-                if (_currentPage == page)
+                if (_currentPage == button)
                 {
-                    UIUpdate(!isCanceled, !isSelected, 0, page);
-                    isCanceled = !isCanceled;
-                    isSelected = !isSelected;
+                    UIUpdate(true, false, 0, 0);
+                    _currentPage = -1;
+                    _firstClick = false;
+                    return;
                 }
-                else if (_currentPage < page)
+
+                if (_currentPage < button)
                 {
-                    UIUpdate(false, true, 1, page);
-                    Debug.Log($"{_currentPage}, {page}");
+                    if(!_firstClick)
+                    {
+                        UIUpdate(false, true, 0, button);
+                        _firstClick = true;
+                    }
+                    else
+                    {
+                        UIUpdate(false, true, 1, button);
+                    }
                 }
-                else if (_currentPage > page)
+                else if (_currentPage > button)
                 {
-                    UIUpdate(false, true, -1, page);
-                    Debug.Log($"{_currentPage}, {page}");
+                    UIUpdate(false, true, -1, button);
                 }
                 break;
         }
+        _currentPage = button;
+        Debug.Log($"{_currentPage} : {button}");
         
-        _currentPage = page;
     }
 
+    // 실제 파라미터 변경 함수
     private void UIUpdate(bool canceled, bool selected, int dir, int index)
     {
-        ButtonsAnimator.SetInteger("Index", index);
-        
-        BookAnimator.SetInteger("PageDir", dir);
-        BookAnimator.SetBool("Canceled", canceled);
-        BookAnimator.SetBool("Selected", selected);
+        ButtonsAnimator.SetInteger(Index, index);
+        BookAnimator.SetInteger(PageDir, dir);
+        BookAnimator.SetBool(Canceled, canceled);
+        BookAnimator.SetBool(Selected, selected);
     }
-
-    private IEnumerator PageCoroutine(int page)
-    {
-        yield return new WaitUntil(() => isPressed);
-        UIUpdate(false, true, -1, page);
-        
-    }
+    
+    
 }
