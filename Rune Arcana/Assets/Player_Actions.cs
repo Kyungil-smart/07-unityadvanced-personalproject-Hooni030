@@ -111,7 +111,7 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Skill_1"",
+                    ""name"": ""Skill"",
                     ""type"": ""Button"",
                     ""id"": ""e3ea1119-f373-45a4-b906-cf1652bbb836"",
                     ""expectedControlType"": """",
@@ -120,9 +120,9 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
                     ""initialStateCheck"": false
                 },
                 {
-                    ""name"": ""Anykey"",
+                    ""name"": ""Teleport"",
                     ""type"": ""Button"",
-                    ""id"": ""83bd020a-928f-4b27-83bf-4260f0a810bb"",
+                    ""id"": ""fb16fcd0-572f-4cd2-905b-09b7238658ca"",
                     ""expectedControlType"": """",
                     ""processors"": """",
                     ""interactions"": """",
@@ -203,18 +203,18 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Skill_1"",
+                    ""action"": ""Skill"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 },
                 {
                     ""name"": """",
-                    ""id"": ""b3ad85b4-87d5-40dc-b5c5-1ca3bc6ebdb0"",
-                    ""path"": ""<Keyboard>/anyKey"",
+                    ""id"": ""f805d274-ec32-45cd-8486-6bbf403407cd"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
-                    ""action"": ""Anykey"",
+                    ""action"": ""Teleport"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -244,8 +244,8 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
         m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
         m_Player_Move = m_Player.FindAction("Move", throwIfNotFound: true);
         m_Player_Attack = m_Player.FindAction("Attack", throwIfNotFound: true);
-        m_Player_Skill_1 = m_Player.FindAction("Skill_1", throwIfNotFound: true);
-        m_Player_Anykey = m_Player.FindAction("Anykey", throwIfNotFound: true);
+        m_Player_Skill = m_Player.FindAction("Skill", throwIfNotFound: true);
+        m_Player_Teleport = m_Player.FindAction("Teleport", throwIfNotFound: true);
     }
 
     ~@Player_Actions()
@@ -328,8 +328,8 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
     private List<IPlayerActions> m_PlayerActionsCallbackInterfaces = new List<IPlayerActions>();
     private readonly InputAction m_Player_Move;
     private readonly InputAction m_Player_Attack;
-    private readonly InputAction m_Player_Skill_1;
-    private readonly InputAction m_Player_Anykey;
+    private readonly InputAction m_Player_Skill;
+    private readonly InputAction m_Player_Teleport;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -350,13 +350,13 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
         /// </summary>
         public InputAction @Attack => m_Wrapper.m_Player_Attack;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Skill_1".
+        /// Provides access to the underlying input action "Player/Skill".
         /// </summary>
-        public InputAction @Skill_1 => m_Wrapper.m_Player_Skill_1;
+        public InputAction @Skill => m_Wrapper.m_Player_Skill;
         /// <summary>
-        /// Provides access to the underlying input action "Player/Anykey".
+        /// Provides access to the underlying input action "Player/Teleport".
         /// </summary>
-        public InputAction @Anykey => m_Wrapper.m_Player_Anykey;
+        public InputAction @Teleport => m_Wrapper.m_Player_Teleport;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -389,12 +389,12 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
             @Attack.started += instance.OnAttack;
             @Attack.performed += instance.OnAttack;
             @Attack.canceled += instance.OnAttack;
-            @Skill_1.started += instance.OnSkill_1;
-            @Skill_1.performed += instance.OnSkill_1;
-            @Skill_1.canceled += instance.OnSkill_1;
-            @Anykey.started += instance.OnAnykey;
-            @Anykey.performed += instance.OnAnykey;
-            @Anykey.canceled += instance.OnAnykey;
+            @Skill.started += instance.OnSkill;
+            @Skill.performed += instance.OnSkill;
+            @Skill.canceled += instance.OnSkill;
+            @Teleport.started += instance.OnTeleport;
+            @Teleport.performed += instance.OnTeleport;
+            @Teleport.canceled += instance.OnTeleport;
         }
 
         /// <summary>
@@ -412,12 +412,12 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
             @Attack.started -= instance.OnAttack;
             @Attack.performed -= instance.OnAttack;
             @Attack.canceled -= instance.OnAttack;
-            @Skill_1.started -= instance.OnSkill_1;
-            @Skill_1.performed -= instance.OnSkill_1;
-            @Skill_1.canceled -= instance.OnSkill_1;
-            @Anykey.started -= instance.OnAnykey;
-            @Anykey.performed -= instance.OnAnykey;
-            @Anykey.canceled -= instance.OnAnykey;
+            @Skill.started -= instance.OnSkill;
+            @Skill.performed -= instance.OnSkill;
+            @Skill.canceled -= instance.OnSkill;
+            @Teleport.started -= instance.OnTeleport;
+            @Teleport.performed -= instance.OnTeleport;
+            @Teleport.canceled -= instance.OnTeleport;
         }
 
         /// <summary>
@@ -486,18 +486,18 @@ public partial class @Player_Actions: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnAttack(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Skill_1" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Skill" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnSkill_1(InputAction.CallbackContext context);
+        void OnSkill(InputAction.CallbackContext context);
         /// <summary>
-        /// Method invoked when associated input action "Anykey" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// Method invoked when associated input action "Teleport" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
         /// </summary>
         /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
-        void OnAnykey(InputAction.CallbackContext context);
+        void OnTeleport(InputAction.CallbackContext context);
     }
 }

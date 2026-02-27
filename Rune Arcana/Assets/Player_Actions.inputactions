@@ -25,7 +25,7 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Skill_1",
+                    "name": "Skill",
                     "type": "Button",
                     "id": "e3ea1119-f373-45a4-b906-cf1652bbb836",
                     "expectedControlType": "",
@@ -34,9 +34,9 @@
                     "initialStateCheck": false
                 },
                 {
-                    "name": "Anykey",
+                    "name": "Teleport",
                     "type": "Button",
-                    "id": "83bd020a-928f-4b27-83bf-4260f0a810bb",
+                    "id": "fb16fcd0-572f-4cd2-905b-09b7238658ca",
                     "expectedControlType": "",
                     "processors": "",
                     "interactions": "",
@@ -117,18 +117,18 @@
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Skill_1",
+                    "action": "Skill",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
                 {
                     "name": "",
-                    "id": "b3ad85b4-87d5-40dc-b5c5-1ca3bc6ebdb0",
-                    "path": "<Keyboard>/anyKey",
+                    "id": "f805d274-ec32-45cd-8486-6bbf403407cd",
+                    "path": "<Keyboard>/space",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "Anykey",
+                    "action": "Teleport",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }
