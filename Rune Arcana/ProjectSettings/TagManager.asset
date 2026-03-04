@@ -12,8 +12,8 @@ TagManager:
   - 
   - Water
   - UI
-  - 
-  - 
+  - Player
+  - Props
   - 
   - 
   - 
@@ -51,8 +51,14 @@ TagManager:
   - name: Player
     uniqueID: 1782437177
     locked: 0
-  - name: Temp
+  - name: UI
     uniqueID: 1874965767
+    locked: 0
+  - name: New Layer 5
+    uniqueID: 3436142913
+    locked: 0
+  - name: Temp
+    uniqueID: 122840591
     locked: 0
   m_RenderingLayers:
   - Default
