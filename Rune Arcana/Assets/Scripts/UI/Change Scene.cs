@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 
-public class ChangScene : MonoBehaviour
+public class ChangeScene : MonoBehaviour
 {
     private static readonly int Out = Animator.StringToHash("Out");
     
@@ -13,17 +13,15 @@ public class ChangScene : MonoBehaviour
     [SerializeField] [Range(0.1f, 10.0f)] private float _inTime = 1f;
     [SerializeField] [Range(0.1f, 10.0f)] private float _outTime = 2f;
     
-    private AudioSource _source;
-    
     private void Awake()
     {
         _canvas = GetComponent<Canvas>();
         _animator = GetComponent<Animator>();
-        _source = GetComponent<AudioSource>();
     }
 
     private void Start()
     {
+        _canvas.enabled = true;
         TurnOnScene();
     }
 
@@ -34,7 +32,6 @@ public class ChangScene : MonoBehaviour
 
     public void TurnOffScene(int index)
     {
-        _canvas.sortingOrder = 10;
         StartCoroutine(OffScene(_outTime, index));
     }
     
