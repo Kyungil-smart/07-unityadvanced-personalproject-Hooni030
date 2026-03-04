@@ -277,7 +277,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 946124195221715228, guid: 4ebb08854d425f24eaa95e07ba3dae9a, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 2703834883674027081, guid: 4ebb08854d425f24eaa95e07ba3dae9a, type: 3}
       propertyPath: m_LocalPosition.x
@@ -319,12 +319,28 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3687389818310643506, guid: 4ebb08854d425f24eaa95e07ba3dae9a, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 3816455856099385880, guid: 4ebb08854d425f24eaa95e07ba3dae9a, type: 3}
       propertyPath: m_Name
       value: Title UI
       objectReference: {fileID: 0}
     - target: {fileID: 3816455856099385880, guid: 4ebb08854d425f24eaa95e07ba3dae9a, type: 3}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 8048754218544435444, guid: 4ebb08854d425f24eaa95e07ba3dae9a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Mode
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 8048754218544435444, guid: 4ebb08854d425f24eaa95e07ba3dae9a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_TargetAssemblyTypeName
+      value: ChangeScene, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 8048754218544435444, guid: 4ebb08854d425f24eaa95e07ba3dae9a, type: 3}
+      propertyPath: m_OnClick.m_PersistentCalls.m_Calls.Array.data[3].m_Arguments.m_IntArgument
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8630183201446405856, guid: 4ebb08854d425f24eaa95e07ba3dae9a, type: 3}
