@@ -8,6 +8,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] private AudioClip[] _stageSounds;
     [SerializeField][Range(0f, 1.0f)] private float _volume;
     [SerializeField] private PlayerController _playerController;
+    [SerializeField] private ChangeScene _changeScene;
     
     [SerializeField] private List<GameObject> _monsters;
     
@@ -24,7 +25,7 @@ public class StageManager : MonoBehaviour
     }
     private void Start()
     {
-        _bossPrefab.SetActive(false);
+        _bossPrefab?.SetActive(false);
         _stageSound.volume = _volume;
         _stageSound.clip = _stageSounds[(int)SoundType.Stage];
         _stageSound.Play();
@@ -45,9 +46,14 @@ public class StageManager : MonoBehaviour
         if (_monsterCount <= 0 && !BossApear)
         {
             BossApear = true;
-            _bossPrefab.SetActive(true);
+            _bossPrefab?.SetActive(true);
             _stageSound.clip = _stageSounds[(int)SoundType.Boss];
             _stageSound.Play();
+        }
+
+        if (GameObject.FindGameObjectWithTag("Boss") == null)
+        {
+            _changeScene.TurnOffScene(3,1);
         }
     }
     
