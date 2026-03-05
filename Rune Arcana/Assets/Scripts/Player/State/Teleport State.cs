@@ -15,10 +15,6 @@ public class TeleportState : IState
 
     public void Update()
     {
-        if (_player.TeleInput)
-        {
-            _player.ChangeState(_player.Teleport);
-        }
     }
 
     public void Exit()

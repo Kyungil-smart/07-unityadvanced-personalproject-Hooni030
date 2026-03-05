@@ -11,7 +11,6 @@ GameObject:
   - component: {fileID: 7773038866382121708}
   - component: {fileID: 1625668536092002419}
   - component: {fileID: 3461579131771364998}
-  - component: {fileID: 6748935512157229655}
   m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
@@ -115,20 +114,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &6748935512157229655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4960508947346176185}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1cbfe9b63a4bd4042a2863adf395fe5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimCtrl
-  _animator: {fileID: 0}
-  _playerController: {fileID: 596134062359290861}
 --- !u!1 &8239350000907514553
 GameObject:
   m_ObjectHideFlags: 0
@@ -143,7 +128,7 @@ GameObject:
   - component: {fileID: 596134062359290861}
   m_Layer: 6
   m_Name: Player
-  m_TagString: Untagged
+  m_TagString: Player
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -157,7 +142,7 @@ Transform:
   m_GameObject: {fileID: 8239350000907514553}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -1.28986, y: 1.14857, z: 2.04475}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -241,8 +226,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: efd73e7d28cca414398ac2e31cf03730, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
+  _animator: {fileID: 3461579131771364998}
   _rb: {fileID: 0}
   _playerSprite: {fileID: 4960508947346176185}
+  _fireballPrefab: {fileID: 8840216555979890071, guid: d6ec983a1d63726448f2c93124f6f94e, type: 3}
+  _mousePosition: {x: 0, y: 0}
+  _direction: {x: 0, y: 0}
   _playerStat: {fileID: 11400000, guid: cca63f635ce34594cbd4101ba29a4c7b, type: 2}
   _hp: 0
   _moveSpeed: 0

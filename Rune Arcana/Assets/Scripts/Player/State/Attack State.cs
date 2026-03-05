@@ -1,7 +1,13 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
 
 public class AttackState : IState
 {
+    private static readonly int Attack = Animator.StringToHash("Attack");
+    private static readonly int Hit = Animator.StringToHash("Hit");
+    private static readonly int Dead = Animator.StringToHash("Dead");
+    
     private PlayerController _player;
     
     public AttackState(PlayerController player)
@@ -11,13 +17,18 @@ public class AttackState : IState
     
     public void Enter()
     {
+        _player._animator.SetBool(Attack, _player.AttackInput);
+        _player.CanMove = false;
+        _player.IsMove = false;
     }
 
     public void Update()
     {
-        if (_player.AttackInput)
+        _player._animator.SetBool(Attack, false);
+        
+        if (!_player.AttackInput)
         {
-            _player.ChangeState(_player.Attack);
+            _player.ChangeState(_player.Idle);
         }
     }
 

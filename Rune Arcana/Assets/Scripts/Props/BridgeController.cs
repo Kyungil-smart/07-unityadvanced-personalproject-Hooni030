@@ -12,7 +12,7 @@ public class BridgeController : MonoBehaviour
         _boxCol2D = GetComponent<BoxCollider2D>();
     }
 
-    private void OnTriggerEnter2D(Collider2D other)
+    private void OnTriggerStay2D(Collider2D other)
     {
         RiverColliderSet(false);
     }
