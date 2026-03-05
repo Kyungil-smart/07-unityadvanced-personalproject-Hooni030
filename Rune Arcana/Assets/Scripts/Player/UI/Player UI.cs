@@ -43,7 +43,7 @@ public class PlayerUI : MonoBehaviour
 
     private void BossAppear()
     {
-        if (_stageManager.BossApear)
+        if (_stageManager.BossAppear)
         {
             _boss.gameObject.SetActive(true);
             _count.gameObject.SetActive(false);

@@ -16,7 +16,7 @@ public class StageManager : MonoBehaviour
     
     [SerializeField] public int _monsterCount = 1;
     
-    public bool BossApear;
+    public bool BossAppear;
 
     private void Awake()
     {
@@ -43,15 +43,15 @@ public class StageManager : MonoBehaviour
 
     private void KillAllMonsters()
     {
-        if (_monsterCount <= 0 && !BossApear)
+        if (_monsterCount <= 0 && !BossAppear)
         {
-            BossApear = true;
+            BossAppear = true;
             _bossPrefab?.SetActive(true);
             _stageSound.clip = _stageSounds[(int)SoundType.Boss];
             _stageSound.Play();
         }
 
-        if (GameObject.FindGameObjectWithTag("Boss") == null)
+        if (GameObject.FindGameObjectWithTag("Boss") == null && BossAppear)
         {
             _changeScene.TurnOffScene(3,1);
         }
