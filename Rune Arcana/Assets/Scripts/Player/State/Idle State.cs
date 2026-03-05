@@ -15,6 +15,7 @@ public class IdleState : IState
     {
         _player.CanMove = true;
         _player.AttackInput = false;
+        _player.isHit = false;
         _player._animator.SetBool(Move, false);
     }
 
@@ -27,7 +28,7 @@ public class IdleState : IState
         if (_player.AttackInput)
             _player.ChangeState(_player.Attack);
         
-        if(_player.isHit)
+        if(!_player.CanHit)
             _player.ChangeState(_player.Hit);
         
         if (_player.isDead)

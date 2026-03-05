@@ -12,6 +12,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 36568ba2b3f5a2a4e9d7642df3705ce8, type: 3}
   m_Name: PlayerStat
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStat
-  HP: 100
+  HP: 200
   Damage: 24
   MoveSpeed: 2.5

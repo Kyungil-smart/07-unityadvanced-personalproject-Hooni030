@@ -13,6 +13,8 @@ GameObject:
   - component: {fileID: 5727973588075269197}
   - component: {fileID: 1506659758932932061}
   - component: {fileID: 426468935565370747}
+  - component: {fileID: 520058777854657977}
+  - component: {fileID: 872402915386632153}
   m_Layer: 0
   m_Name: Skeleton
   m_TagString: Enemies
@@ -151,16 +153,135 @@ MonoBehaviour:
   _player: {fileID: 0}
   _animator: {fileID: 7450299508171821957}
   _rb: {fileID: 0}
+  _collider: {fileID: 0}
   _attackCol: {fileID: 1506659758932932061}
+  _monsterSound: {fileID: 0}
   _monster: {fileID: 11400000, guid: 34ea4c5dc9b64ad4e9392b1f0efad3ee, type: 2}
   _name: 
   _hp: 0
   _moveSpeed: 1
   _damage: 0
   _range: 0
-  _canMove: 1
-  _isMove: 0
-  _canAttack: 0
+  canMove: 1
+  isMove: 0
+  attack: 0
+  isHurt: 0
+--- !u!114 &520058777854657977
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5231520784291174822}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 59304f499a8859a4cb9e1d0882c92484, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::MonsterSoundController
+  _audioSource: {fileID: 0}
+  _skeletonStep: {fileID: 8300000, guid: 831676962c5c9ed47a86dcd48789e4bc, type: 3}
+  _stepVolume: 0.1
+  _skeletonHit: {fileID: 8300000, guid: 5fe78349271bd714ba6c1f8e6528062c, type: 3}
+  _skeletonHitVolume: 0.3
+  _skeletonSmash: {fileID: 8300000, guid: d6bf176ce29088b43982040a22ac87e6, type: 3}
+  _skeletonSmashVolume: 0.2
+--- !u!82 &872402915386632153
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5231520784291174822}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_Resource: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
 --- !u!1 &7785817231723331851
 GameObject:
   m_ObjectHideFlags: 0

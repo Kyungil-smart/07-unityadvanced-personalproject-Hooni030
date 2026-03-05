@@ -17,7 +17,6 @@ public class HitState : IState
 
     public void Update()
     {
-        Debug.Log(_player.IsMove);
         if(!_player.IsMove)
             _player.ChangeState(_player.Idle);
         

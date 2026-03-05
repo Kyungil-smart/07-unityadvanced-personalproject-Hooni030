@@ -4,9 +4,6 @@ public class FireballController : MonoBehaviour
 {
     [SerializeField] private CircleCollider2D _circleCol;
     [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private AudioSource _audioSource;
-    [SerializeField] private AudioClip _audioClip;
-    
     public PlayerController _player;
     
     [SerializeField] private float _lifeTime;
@@ -23,20 +20,12 @@ public class FireballController : MonoBehaviour
         _player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
         _rb = GetComponent<Rigidbody2D>();
         _circleCol = GetComponent<CircleCollider2D>();
-        
-        if (_audioSource == null)
-            _audioSource = GetComponent<AudioSource>();
-
-        if (_audioSource == null)
-            _audioSource = gameObject.AddComponent<AudioSource>();
     }
 
     private void Start()
     {
-        _audioSource.clip = _audioClip;
         _direction = _player._direction;
         _damage = _player.Damage;
-        FireballSound();
         Destroy(gameObject, _lifeTime);
     }
 
@@ -47,12 +36,6 @@ public class FireballController : MonoBehaviour
             Destroy(gameObject, 0.2f);
         }
     }
-
-    public void FireballSound()
-    {
-        _audioSource.PlayOneShot(_audioSource.clip);
-    }
-
 
     private void FixedUpdate()
     {

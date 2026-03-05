@@ -1,5 +1,6 @@
 using System;
 using System.Collections;
+using NUnit.Framework;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -102,6 +103,7 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         _stateMachine.Update();
+        DebugUtil.DebugingColor($"{_stateMachine._currentState}", "D9FF2F");
         CheckHP();  
     }
 
@@ -172,16 +174,18 @@ public class PlayerController : MonoBehaviour
             
             _rb.linearVelocity = MoveInput * MoveSpeed;
         }
+        else
+        {
+            _rb.linearVelocity = Vector2.zero;
+        }
     }
    
     private void PointDirection()
     {
         if (_mousePosition.x < 0)
             _playerSpriteRenderer.flipX = true;
-            // transform.localScale = new Vector3(-1, 1, 1);
         if (_mousePosition.x > 0)
             _playerSpriteRenderer.flipX = false;
-            // transform.localScale = new Vector3(1, 1, 1);
     }
 
     public void StepSound()
@@ -194,8 +198,10 @@ public class PlayerController : MonoBehaviour
     {
         if(CanHit)
         {
+            _soundController.PlayerHitSound();
             HP -= damage;
             isHit = true;
+            CanHit = false;
             if(_hitRoutine == null)
                 _hitRoutine = StartCoroutine(HitDelay());
         }
@@ -203,22 +209,24 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log("무적 시간");
         }
-        
     }
 
     private IEnumerator HitDelay()
     {
         CanMove = false;
+        _soundController.PlayerHitSound();
         yield return YieldContainer.Wait(0.18f);
         isHit = false;
         CanMove = true;
+        yield return YieldContainer.Wait(0.18f);
         CanHit = true;
+        IsMove = false;
         _hitRoutine = null;
     }
     
     private IEnumerator FootStep()
     {
-        _soundController.FootStep();
+        _soundController.FootStepSound();
         yield return YieldContainer.Wait(0.5f);
         _StepRoutine = null;
     }
@@ -234,7 +242,7 @@ public class PlayerController : MonoBehaviour
         Vector2 ballDir = new Vector2(transform.position.x + _direction.x / 10f,
             transform.position.y + _direction.y / 10f);
         Instantiate(_fireballPrefab, ballDir, Quaternion.identity);
-        
+        _soundController.FireballSound();
         yield return YieldContainer.Wait(0.28f);
         
         AttackInput = false;

@@ -16,5 +16,6 @@ MonoBehaviour:
   HP: 100
   MoveSpeed: 1
   Attack_Damage: 15
+  Detect_Range: 7
   Attack_Range: 1.414
   Drop_Gold: 50

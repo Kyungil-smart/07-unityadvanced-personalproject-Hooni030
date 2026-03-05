@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class MonsterControlller : MonoBehaviour
 {
+    private Coroutine _StepRoutine;
     private Coroutine _AttackRoutine;
     private Coroutine _HurtRoutine;
     
@@ -16,6 +17,7 @@ public class MonsterControlller : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private CapsuleCollider2D _collider;
     [SerializeField] private CircleCollider2D _attackCol;
+    [SerializeField] private MonsterSoundController _monsterSound;
     
     public StateMachine _stateMachine;
     public Mon_IdleState Idle { get; private set; }
@@ -43,6 +45,10 @@ public class MonsterControlller : MonoBehaviour
     public float Damage { get => _damage; set { _damage = value; } }
     [SerializeField] private float _range;
     public float Range { get => _range; set { _range = value; } }
+    [SerializeField] private float _detectRange;
+    public float DetectRange { get => _detectRange; set { _detectRange = value; } }
+    
+    
 
     public bool canMove = true;
     public bool isMove;
@@ -88,6 +94,7 @@ public class MonsterControlller : MonoBehaviour
         {
             isHurt = true;
             _HurtRoutine = StartCoroutine(HurtDelay());
+            _monsterSound.SkeletonHit();
             FireballController fireball = other.GetComponent<FireballController>();
             HP -= fireball.Damage;
             DebugUtil.DebugingColor($"스켈레톤 체력 : {HP}", "ff007f");
@@ -131,8 +138,8 @@ public class MonsterControlller : MonoBehaviour
     private void Movement()
     {
         GetDirection();
-        
-        if (canMove)
+
+        if (canMove && _distance.magnitude <= DetectRange)
         {
             isMove = true;
             FlipSprite();
@@ -159,11 +166,16 @@ public class MonsterControlller : MonoBehaviour
         else if (_direction.x > 0)
             transform.localScale = new Vector3(1, 1, 1);
     }
+    public void StepSound()
+    {
+        if(_StepRoutine == null)
+            _StepRoutine = StartCoroutine(FootStep());
+    }
 
     private void AttackRay()
     {
         _hit = Physics2D.Raycast(transform.position, _direction, Range * 1.1f, _playerLayer);
-
+        _monsterSound.SkeletonSmash();
         if (_hit.collider == null)
         {
             Debug.Log("Player not found");
@@ -202,6 +214,12 @@ public class MonsterControlller : MonoBehaviour
         _HurtRoutine = null;
     }
 
+    private IEnumerator FootStep()
+    {
+        _monsterSound.SkeletonStep();
+        yield return YieldContainer.Wait(1f);
+        _StepRoutine = null;
+    }
     
     public void ChangeState(IState state)
     {
@@ -213,6 +231,7 @@ public class MonsterControlller : MonoBehaviour
         _rb = GetComponent<Rigidbody2D>();
         _player = GameObject.FindGameObjectWithTag("Player");
         _collider = GetComponent<CapsuleCollider2D>();
+        _monsterSound = GetComponent<MonsterSoundController>();
 
         _playerLayer = LayerMask.GetMask("Player");
         
@@ -228,6 +247,7 @@ public class MonsterControlller : MonoBehaviour
         MoveSpeed = _monster.MoveSpeed;
         Range = _monster.Attack_Range;
         Damage = _monster.Attack_Damage;
+        DetectRange = _monster.Detect_Range;
         
         _attackCol.radius = Range;
     }

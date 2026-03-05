@@ -29,7 +29,7 @@ public class AttackState : IState
         if (!_player.AttackInput)
             _player.ChangeState(_player.Idle);
         
-        if(_player.isHit)
+        if(!_player.CanHit)
             _player.ChangeState(_player.Hit);
         
         if(_player.isDead)

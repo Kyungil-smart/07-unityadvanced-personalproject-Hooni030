@@ -16,6 +16,7 @@ public class Mon_MoveState : IState
 
     public void Update()
     {
+        _monster.StepSound();
         if (_monster.HP <= 0)
             _monster.ChangeState(_monster.Dead);
         

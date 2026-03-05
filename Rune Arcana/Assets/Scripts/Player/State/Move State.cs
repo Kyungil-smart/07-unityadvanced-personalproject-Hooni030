@@ -15,6 +15,7 @@ public class MoveState : IState
     {
         _player.IsMove = true;
         _player.CanMove = true;
+        _player.isHit = false;
         _player._animator.SetBool(Move, true);
     }
 
@@ -28,7 +29,7 @@ public class MoveState : IState
         if (_player.AttackInput)
             _player.ChangeState(_player.Attack);
         
-        if(_player.isHit)
+        if(!_player.CanHit)
             _player.ChangeState(_player.Hit);
         
         if (_player.isDead)

@@ -4,11 +4,11 @@
 - Active scene:
   - Name: Test Scene
   - Tags:
-    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Enemies, Attack
+    - Untagged, Respawn, Finish, EditorOnly, MainCamera, Player, GameController, Enemies, Attack, Boss
   - Layers:
     - Default, TransparentFX, Ignore Raycast, Water, UI, Player, Props
 - Active game object:
-  - Name: Skeleton
+  - Name: Count Panel
   - Tag: Untagged
-  - Layer: Default
+  - Layer: UI
 <!-- UNITY CODE ASSIST INSTRUCTIONS END -->
