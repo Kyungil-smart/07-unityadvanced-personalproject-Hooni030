@@ -5,7 +5,8 @@ using UnityEngine;
 
 public class MonsterControlller : MonoBehaviour
 {
-    private Coroutine _routine;
+    private Coroutine _AttackRoutine;
+    private Coroutine _HurtRoutine;
     
     [Header("Get Components")]
     [SerializeField] private GameObject _player;
@@ -19,6 +20,7 @@ public class MonsterControlller : MonoBehaviour
     public Mon_IdleState Idle { get; private set; }
     public Mon_MoveState Move { get; private set; }
     public Mon_AttackState Attack { get; private set; }
+    public Mon_HurtState Hurt { get; private set; }
     public Mon_DeadState Dead { get; private set; }
     
     private Vector2 _direction;
@@ -41,6 +43,7 @@ public class MonsterControlller : MonoBehaviour
     public bool _canMove = true;
     public bool _isMove = false;
     public bool _canAttack = false;
+    public bool _canHurt = true;
 
     private void Awake()
     {
@@ -81,10 +84,17 @@ public class MonsterControlller : MonoBehaviour
             _canMove = false;
             _canAttack = true;
             _isMove = false;
-            if (_routine == null)
+            if (_AttackRoutine == null)
             {
-                _routine = StartCoroutine(AttackPlayer());
+                _AttackRoutine = StartCoroutine(AttackPlayer());
             }
+        }
+
+        if (other.CompareTag("Attack") && _canHurt)
+        {
+            FireballController fireball = other.GetComponent<FireballController>();
+            HP -= fireball.Damage;
+            DebugUtil.DebugingColor($"스켈레톤 체력 : {HP}", "Green");
         }
     }
 
@@ -125,18 +135,24 @@ public class MonsterControlller : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
     }
 
-    private int count = 0;
 
     private IEnumerator AttackPlayer()
     {
         // 몬스터 멈춤
         _canAttack = false;
         _canMove = false;
-        Debug.Log(++count);
         yield return YieldContainer.Wait(1.5f);
         _canMove = true;
-        _routine = null;
+        _AttackRoutine = null;
     }
+
+    private IEnumerator HurtDelay()
+    {
+        _canHurt = false;
+        yield return YieldContainer.Wait(1.5f);
+        _canHurt = true;
+    }
+
     
     public void ChangeState(IState state)
     {
@@ -147,7 +163,6 @@ public class MonsterControlller : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _player = GameObject.FindGameObjectWithTag("Player");
-        
         
         _stateMachine = new StateMachine();
         Idle = new Mon_IdleState(this);

@@ -5,7 +5,8 @@ using UnityEngine.InputSystem;
 
 public class PlayerController : MonoBehaviour
 {
-    private Coroutine _routine;
+    private Coroutine _AttckRoutine = null;
+    private Coroutine _StepRoutine = null;
     
     [Header("Get Components")]
     [SerializeField] private Player_Actions _playerActions;
@@ -13,13 +14,13 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private GameObject _playerSprite;
     [SerializeField] private GameObject _fireballPrefab;
+    [SerializeField] private PlayerSoundController _soundController;
 
     public StateMachine _stateMachine;
     public IdleState Idle { get; private set; }
     public MoveState Move { get; private set; }
     public AttackState Attack { get; private set; }
     public HitState Hit { get; private set; }
-    public TeleportState Teleport { get; private set; }
     public DeadState Dead { get; private set; }
 
     [SerializeField] Vector2 _mousePosition;
@@ -33,6 +34,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private float _Damage;
     public float Damage { get => _Damage; set => _Damage = value; }
     [SerializeField] private float _moveSpeed;
+    [SerializeField] private float _stepInterval;
     public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
     
     
@@ -105,8 +107,8 @@ public class PlayerController : MonoBehaviour
         {
             AttackInput = true;
             CanMove = false;
-            if(_routine == null)
-                _routine = StartCoroutine(FireBall());
+            if(_AttckRoutine == null)
+                _AttckRoutine = StartCoroutine(FireBall());
         }
     }
 
@@ -138,8 +140,12 @@ public class PlayerController : MonoBehaviour
         if (CanMove)
         {
             IsMove = true;
+            if(_StepRoutine == null)
+                _StepRoutine = StartCoroutine(FootStep());
             _rb.linearVelocity = MoveInput * MoveSpeed;
         }
+        else
+            StopCoroutine(FootStep());
     }
    
     private void PointDirection()
@@ -154,14 +160,21 @@ public class PlayerController : MonoBehaviour
     {
         yield return YieldContainer.Wait(0.28f);
         
-        Vector2 ballDir = new Vector2(transform.position.x + _direction.x,
-            transform.position.y + _direction.y);
+        Vector2 ballDir = new Vector2(transform.position.x + _direction.x / 10f,
+            transform.position.y + _direction.y / 10f);
         Instantiate(_fireballPrefab, ballDir, Quaternion.identity);
         
         yield return YieldContainer.Wait(0.28f);
         
         AttackInput = false;
-        _routine = null;
+        _AttckRoutine = null;
+    }
+    
+    private IEnumerator FootStep()
+    {
+        _soundController.FootStep();
+        yield return YieldContainer.Wait(_stepInterval);
+        _StepRoutine = null;
     }
     public void ChangeState(IState state)
     {
@@ -171,6 +184,7 @@ public class PlayerController : MonoBehaviour
     private void Init()
     {
         _rb = GetComponent<Rigidbody2D>();
+        _soundController = GetComponent<PlayerSoundController>();
         
         _stateMachine = new StateMachine();
         _playerActions = new Player_Actions();

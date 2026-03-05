@@ -13,6 +13,5 @@ MonoBehaviour:
   m_Name: PlayerStat
   m_EditorClassIdentifier: Assembly-CSharp::PlayerStat
   HP: 100
+  Damage: 24
   MoveSpeed: 2.5
-  AvoidDistance: 0
-  Gold: 0

@@ -20,7 +20,6 @@ public class Mon_AttackState : IState
         {
             _monster.ChangeState(_monster.Move);
         }
-        
     }
 
     public void Exit()

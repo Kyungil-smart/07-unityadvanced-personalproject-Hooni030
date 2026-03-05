@@ -16,12 +16,17 @@ public class Mon_MoveState : IState
 
     public void Update()
     {
-        if (!_monster._isMove)
-            _monster.ChangeState(_monster.Idle);
-        else if (_monster._canAttack)
-            _monster.ChangeState(_monster.Attack);
         if (_monster.HP <= 0)
             _monster.ChangeState(_monster.Dead);
+        
+        else if (_monster._canAttack)
+            _monster.ChangeState(_monster.Attack);
+        
+        else if (!_monster._canHurt)
+            _monster.ChangeState(_monster.Hurt);
+        
+        else if (!_monster._isMove)
+            _monster.ChangeState(_monster.Idle);
     }
 
     public void Exit()
