@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 1625668536092002419}
   - component: {fileID: 3461579131771364998}
   - component: {fileID: 6748935512157229655}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -80,7 +80,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_GlobalIlluminationMeshLod: 0
   m_SortingLayerID: 1782437177
-  m_SortingLayer: 2
+  m_SortingLayer: 3
   m_SortingOrder: 1
   m_MaskInteraction: 0
   m_Sprite: {fileID: -1653758100, guid: 78472a02a4d333e4b875f3f69ac983c1, type: 3}
@@ -127,6 +127,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1cbfe9b63a4bd4042a2863adf395fe5d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerAnimCtrl
+  _animator: {fileID: 0}
+  _playerController: {fileID: 596134062359290861}
 --- !u!1 &8239350000907514553
 GameObject:
   m_ObjectHideFlags: 0
@@ -137,9 +139,9 @@ GameObject:
   m_Component:
   - component: {fileID: 63486133069118647}
   - component: {fileID: 845594542818901301}
-  - component: {fileID: 2357017629944534382}
+  - component: {fileID: 577908308854360049}
   - component: {fileID: 596134062359290861}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Player
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -190,8 +192,8 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 4
---- !u!61 &2357017629944534382
-BoxCollider2D:
+--- !u!70 &577908308854360049
+CapsuleCollider2D:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -224,18 +226,9 @@ BoxCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0, y: 0}
-  m_SpriteTilingProperty:
-    border: {x: 0, y: 0, z: 0, w: 0}
-    pivot: {x: 0, y: 0}
-    oldSize: {x: 0, y: 0}
-    newSize: {x: 0, y: 0}
-    adaptiveTilingThreshold: 0
-    drawMode: 0
-    adaptiveTiling: 0
-  m_AutoTiling: 0
-  m_Size: {x: 0.8, y: 0.8}
-  m_EdgeRadius: 0
+  m_Offset: {x: 0, y: -0.2}
+  m_Size: {x: 0.5, y: 0.5}
+  m_Direction: 0
 --- !u!114 &596134062359290861
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -249,8 +242,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerController
   _rb: {fileID: 0}
-  _animator: {fileID: 0}
-  _collider: {fileID: 0}
   _playerSprite: {fileID: 4960508947346176185}
   _playerStat: {fileID: 11400000, guid: cca63f635ce34594cbd4101ba29a4c7b, type: 2}
   _hp: 0
@@ -269,7 +260,7 @@ GameObject:
   - component: {fileID: 4905776781372190550}
   - component: {fileID: 5070313734288734071}
   - component: {fileID: 3092245275832316005}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: Camera
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -322,11 +313,11 @@ Camera:
     y: 0
     width: 1
     height: 1
-  near clip plane: 0.3
-  far clip plane: 1000
+  near clip plane: 0.5
+  far clip plane: 100
   field of view: 60
   orthographic: 1
-  orthographic size: 4
+  orthographic size: 5
   m_Depth: 0
   m_CullingMask:
     serializedVersion: 2

@@ -10,8 +10,6 @@ public class PlayerController : MonoBehaviour
     [Header("Get Components")]
     [SerializeField] private Player_Actions _playerActions;
     [SerializeField] private Rigidbody2D _rb;
-    [SerializeField] private Animator _animator;
-    [SerializeField] private BoxCollider2D _collider;
     [SerializeField] private GameObject _playerSprite;
 
     private StateMachine _stateMachine;
@@ -36,11 +34,14 @@ public class PlayerController : MonoBehaviour
     public float Gold { get => _gold; set => _gold = value; }
     
     public Vector2 MoveInput { get; private set; }
+    public bool IsMove { get; set; }
     public bool AttackInput { get; private set; }
     public bool SkillInput { get; private set; }
     public bool isHit { get; private set; }
     public bool TeleInput { get; private set; }
     public bool isDead { get; private set; }
+    
+    public bool InteractInput { get; private set; }
 
     private void Awake()
     {
@@ -62,6 +63,8 @@ public class PlayerController : MonoBehaviour
         _playerActions.Player.Attack.started += OnAttack;
         _playerActions.Player.Skill.started += OnSkill;
         _playerActions.Player.Teleport.started += OnTeleport;
+        _playerActions.Player.Interact.started += OnInteract;
+        _playerActions.Player.Interact.canceled += OnInteract;
     }
 
     private void OnDisable()
@@ -72,7 +75,9 @@ public class PlayerController : MonoBehaviour
         _playerActions.Player.Attack.started -= OnAttack;
         _playerActions.Player.Skill.started -= OnSkill;
         _playerActions.Player.Teleport.started -= OnTeleport;
-
+        _playerActions.Player.Interact.started -= OnInteract;
+        _playerActions.Player.Interact.canceled -= OnInteract;
+        
         _playerActions.Disable();
     }
 
@@ -90,7 +95,9 @@ public class PlayerController : MonoBehaviour
     {
         MoveInput = ctx.ReadValue<Vector2>();
         PointDirection();
-        // DebugUtil.DebugingColor($"{_rb.linearVelocity}, 방향 : {MoveInput}, 속도 : {MoveSpeed}", "F31C41");
+        IsMove = Math.Abs(MoveInput.x) + Math.Abs(MoveInput.y) > 0f ? true : false;
+        Debug.Log(IsMove);
+
     }
 
     public void OnAttack(InputAction.CallbackContext ctx)
@@ -117,15 +124,29 @@ public class PlayerController : MonoBehaviour
         }
     }
 
+    public void OnInteract(InputAction.CallbackContext ctx)
+    {
+        if (ctx.started)
+        {
+            InteractInput = true;
+            Debug.Log(InteractInput);
+        }
+
+        if (ctx.canceled)
+        {
+            InteractInput = false;
+            Debug.Log(InteractInput);
+        }
+    }
+
     private void Movement()
     {
+        
         _rb.linearVelocity = MoveInput * MoveSpeed;
     }
 
     private void Init()
     {
-        _animator = _playerSprite.GetComponent<Animator>();
-        _collider = GetComponent<BoxCollider2D>();
         _rb = GetComponent<Rigidbody2D>();
         
         _stateMachine = new StateMachine();
