@@ -21,7 +21,7 @@ public class Mon_IdleState : IState
         {
             _monster.ChangeState(_monster.Move);
         }
-        if (_monster._canAttack)
+        else if (_monster._canAttack)
         {
             _monster.ChangeState(_monster.Attack);
         }
