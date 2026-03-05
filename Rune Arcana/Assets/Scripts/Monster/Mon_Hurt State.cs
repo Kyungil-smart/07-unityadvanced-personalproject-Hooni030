@@ -11,9 +11,9 @@ public class Mon_HurtState : IState
 
     public void Enter()
     {
-        _monster._canMove = false;
+        _monster.canMove = false;
         _monster._animator.SetBool("Hurt", true);
-        _monster._isHurt = true;
+        _monster.isHurt = true;
     }
 
     public void Update()
@@ -23,7 +23,7 @@ public class Mon_HurtState : IState
             _monster.ChangeState(_monster.Dead);
         }
 
-        if (!_monster._isHurt)
+        if (!_monster.isHurt)
         {
             _monster.ChangeState(_monster.Idle);
         }

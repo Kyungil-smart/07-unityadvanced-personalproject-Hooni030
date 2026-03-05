@@ -594,16 +594,6 @@ Tilemap:
       m_TileObjectToInstantiateIndex: 65535
       dummyAlignment: 0
       m_AllTileFlags: 1073741826
-  - first: {x: 14, y: -1, z: 0}
-    second:
-      serializedVersion: 2
-      m_TileIndex: 0
-      m_TileSpriteIndex: 19
-      m_TileMatrixIndex: 0
-      m_TileColorIndex: 0
-      m_TileObjectToInstantiateIndex: 65535
-      dummyAlignment: 0
-      m_AllTileFlags: 1073741826
   - first: {x: 0, y: 0, z: 0}
     second:
       serializedVersion: 2
@@ -1006,7 +996,7 @@ Tilemap:
       m_AllTileFlags: 1073741826
   m_AnimatedTiles: {}
   m_TileAssetArray:
-  - m_RefCount: 77
+  - m_RefCount: 76
     m_Data: {fileID: 11400000, guid: c7752a97ffb4d6343a07e3b30b98bf52, type: 2}
   m_TileSpriteArray:
   - m_RefCount: 0
@@ -1047,7 +1037,7 @@ Tilemap:
     m_Data: {fileID: -932449862, guid: 71de434007f09b5468a954a02612535a, type: 3}
   - m_RefCount: 5
     m_Data: {fileID: -945838886, guid: 71de434007f09b5468a954a02612535a, type: 3}
-  - m_RefCount: 3
+  - m_RefCount: 2
     m_Data: {fileID: -364958156, guid: 71de434007f09b5468a954a02612535a, type: 3}
   - m_RefCount: 1
     m_Data: {fileID: -1174844766, guid: 71de434007f09b5468a954a02612535a, type: 3}
@@ -1066,7 +1056,7 @@ Tilemap:
   - m_RefCount: 1
     m_Data: {fileID: 1742513575, guid: 71de434007f09b5468a954a02612535a, type: 3}
   m_TileMatrixArray:
-  - m_RefCount: 77
+  - m_RefCount: 76
     m_Data:
       e00: 1
       e01: 0
@@ -1085,7 +1075,7 @@ Tilemap:
       e32: 0
       e33: 1
   m_TileColorArray:
-  - m_RefCount: 77
+  - m_RefCount: 76
     m_Data: {r: 1, g: 1, b: 1, a: 1}
   m_TileObjectToInstantiateArray: []
   m_AnimationFrameRate: 1
@@ -5562,11 +5552,11 @@ PrefabInstance:
       objectReference: {fileID: 8300000, guid: 4938372822e08ac4487f1b8f9a72d2e8, type: 3}
     - target: {fileID: 63486133069118647, guid: 3d893a7b72d186449b8880be93224939, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -0.65
+      value: -2.16
       objectReference: {fileID: 0}
     - target: {fileID: 63486133069118647, guid: 3d893a7b72d186449b8880be93224939, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.26
+      value: -2.68
       objectReference: {fileID: 0}
     - target: {fileID: 63486133069118647, guid: 3d893a7b72d186449b8880be93224939, type: 3}
       propertyPath: m_LocalPosition.z
@@ -5604,9 +5594,25 @@ PrefabInstance:
       propertyPath: _stepInterval
       value: 0.5
       objectReference: {fileID: 0}
+    - target: {fileID: 845594542818901301, guid: 3d893a7b72d186449b8880be93224939, type: 3}
+      propertyPath: m_SleepingMode
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4960508947346176185, guid: 3d893a7b72d186449b8880be93224939, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5070313734288734071, guid: 3d893a7b72d186449b8880be93224939, type: 3}
+      propertyPath: m_Enabled
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 8239350000907514553, guid: 3d893a7b72d186449b8880be93224939, type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 9163971318299905010, guid: 3d893a7b72d186449b8880be93224939, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

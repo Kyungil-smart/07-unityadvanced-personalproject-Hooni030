@@ -14,6 +14,7 @@ public class MonsterControlller : MonoBehaviour
     [SerializeField] private Player_Actions _playerActions;
     [SerializeField] public Animator _animator;
     [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private CapsuleCollider2D _collider;
     [SerializeField] private CircleCollider2D _attackCol;
     
     public StateMachine _stateMachine;
@@ -26,12 +27,15 @@ public class MonsterControlller : MonoBehaviour
     private Vector2 _direction;
     private Vector2 _distance;
     
+    private LayerMask _playerLayer;
+    private RaycastHit2D _hit;
+    
     [Space(20)]
     [Header("Monster Stats")]
     [SerializeField] private MonsterStat _monster;
     [SerializeField] private string _name;
     public string Name { get => _name; set { _name = value; } }
-    [SerializeField] private float _hp;
+    [SerializeField] private float _hp = 1;
     public float HP { get => _hp; set { _hp = value; } }
     [SerializeField] private float _moveSpeed;
     public float MoveSpeed { get => _moveSpeed; set { _moveSpeed = value; } }
@@ -40,10 +44,10 @@ public class MonsterControlller : MonoBehaviour
     [SerializeField] private float _range;
     public float Range { get => _range; set { _range = value; } }
 
-    public bool _canMove = true;
-    public bool _isMove = false;
-    public bool _canAttack = false;
-    public bool _isHurt = false;
+    public bool canMove = true;
+    public bool isMove;
+    public bool attack;
+    public bool isHurt;
 
     private void Awake()
     {
@@ -63,7 +67,7 @@ public class MonsterControlller : MonoBehaviour
     private void Update()
     {
         _stateMachine.Update();
-        CheckHP();
+        CheckHp();
     }
 
     private void OnDrawGizmos()
@@ -73,13 +77,16 @@ public class MonsterControlller : MonoBehaviour
 
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(transform.position, Range);
+        
+        Gizmos.color = Color.red;
+        Gizmos.DrawRay(transform.position, _direction * Range);
     }
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.CompareTag("Attack") && !_isHurt && _HurtRoutine == null)
+        if (other.CompareTag("Attack") && !isHurt && _HurtRoutine == null)
         {
-            _isHurt = true;
+            isHurt = true;
             _HurtRoutine = StartCoroutine(HurtDelay());
             FireballController fireball = other.GetComponent<FireballController>();
             HP -= fireball.Damage;
@@ -91,12 +98,11 @@ public class MonsterControlller : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _rb.linearVelocity = Vector2.zero;
-            _canMove = false;
-            _canAttack = true;
-            _isMove = false;
+            canMove = false;
+            Movement();
             if (_AttackRoutine == null)
             {
+                attack = true;
                 _AttackRoutine = StartCoroutine(AttackPlayer());
             }
         }
@@ -106,15 +112,17 @@ public class MonsterControlller : MonoBehaviour
     {
         if (other.CompareTag("Player"))
         {
-            _canAttack = false;
+            if(!attack)
+                canMove = true;
         }
     }
 
-    private void CheckHP()
+    private void CheckHp()
     {
         if (HP <= 0)
         {
-            _canMove = false;
+            _collider.enabled = false;
+            canMove = false;
             _rb.linearVelocity = Vector2.zero;
             Destroy(gameObject, 1.1f);
         }
@@ -122,15 +130,18 @@ public class MonsterControlller : MonoBehaviour
 
     private void Movement()
     {
-        Debug.DrawRay(transform.position, _direction, Color.yellow);
-        
         GetDirection();
         
-        if (_canMove)
+        if (canMove)
         {
-            _isMove = true;
+            isMove = true;
             FlipSprite();
             _rb.linearVelocity = _direction * MoveSpeed;
+        }
+        else
+        {
+            isMove = false;
+            _rb.linearVelocity = Vector2.zero;
         }
     }
 
@@ -149,23 +160,45 @@ public class MonsterControlller : MonoBehaviour
             transform.localScale = new Vector3(1, 1, 1);
     }
 
+    private void AttackRay()
+    {
+        _hit = Physics2D.Raycast(transform.position, _direction, Range * 1.1f, _playerLayer);
+
+        if (_hit.collider == null)
+        {
+            Debug.Log("Player not found");
+            return;
+        }
+        
+        PlayerController playerController = _hit.collider.GetComponent<PlayerController>();
+        
+        if (playerController != null)
+        {
+            playerController.PlayerDamage(Damage);
+        }
+        else
+            Debug.Log("Player component not found");
+    }
+
 
     private IEnumerator AttackPlayer()
     {
         // 몬스터 멈춤
-        _canAttack = false;
-        _canMove = false;
-        yield return YieldContainer.Wait(1.5f);
-        _canMove = true;
+        yield return YieldContainer.Wait(0.3f);
+        AttackRay();
+        yield return YieldContainer.Wait(1.2f);
+        attack = false;
+        canMove = true;
+        yield return YieldContainer.Wait(1f);
         _AttackRoutine = null;
     }
 
     private IEnumerator HurtDelay()
     {
-        _canMove = false;
+        canMove = false;
         _rb.linearVelocity = Vector2.zero;
         yield return YieldContainer.Wait(0.5f);
-        _isHurt = false;
+        isHurt = false;
         _HurtRoutine = null;
     }
 
@@ -179,6 +212,9 @@ public class MonsterControlller : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _player = GameObject.FindGameObjectWithTag("Player");
+        _collider = GetComponent<CapsuleCollider2D>();
+
+        _playerLayer = LayerMask.GetMask("Player");
         
         _stateMachine = new StateMachine();
         Idle = new Mon_IdleState(this);

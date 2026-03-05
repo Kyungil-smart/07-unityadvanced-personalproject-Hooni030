@@ -10,13 +10,12 @@ public class Mon_AttackState : IState
     }
     public void Enter()
     {
-        _monster._canMove = false;
         _monster._animator.SetBool("Attack", true);
     }
 
     public void Update()
     {
-        if (_monster._canMove)
+        if (_monster.canMove)
         {
             _monster.ChangeState(_monster.Move);
         }

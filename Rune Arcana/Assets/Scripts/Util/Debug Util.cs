@@ -6,5 +6,4 @@ public static class DebugUtil
     {
         Debug.Log($"<color=#{color}>{text}</color>");
     }
-
 }

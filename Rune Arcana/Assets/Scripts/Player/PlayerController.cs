@@ -7,6 +7,7 @@ public class PlayerController : MonoBehaviour
 {
     private Coroutine _AttckRoutine = null;
     private Coroutine _StepRoutine = null;
+    private Coroutine _hitRoutine = null;
     
     [Header("Get Components")]
     [SerializeField] private Player_Actions _playerActions;
@@ -14,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private GameObject _playerSprite;
     [SerializeField] private GameObject _fireballPrefab;
+    [SerializeField] private SpriteRenderer _playerSpriteRenderer;
     [SerializeField] private PlayerSoundController _soundController;
 
     public StateMachine _stateMachine;
@@ -29,23 +31,31 @@ public class PlayerController : MonoBehaviour
     [Space(20)]
     [Header("Player Stats")]
     [SerializeField] private PlayerStat _playerStat;
-    [SerializeField] private float _hp;
-    public float HP { get => _hp; set => _hp = value; }
+    [SerializeField] private float _hp = 1;
+
+    public float HP
+    {
+        get { return _hp; }
+        set 
+        {
+            _hp = value;  
+            DebugUtil.DebugingColor($"플레이어 체력 : {HP}", "D9FF2F");
+        } 
+    }
+    
     [SerializeField] private float _Damage;
     public float Damage { get => _Damage; set => _Damage = value; }
     [SerializeField] private float _moveSpeed;
     [SerializeField] private float _stepInterval;
     public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
     
-    
-    
     public Vector2 MoveInput { get; private set; }
     public bool CanMove { get; set; } = true;
     public bool IsMove { get; set; }
     public bool AttackInput { get; set; }
-    public bool isHit { get; private set; }
-    public bool CanHit { get;private set; }
-    public bool isDead { get; private set; }
+    public bool CanHit { get; set; } = true;
+    public bool isHit { get; set; }
+    public bool isDead { get; set; }
     
     public bool InteractInput { get; private set; }
 
@@ -87,13 +97,12 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Movement();
-        if(AttackInput)
-            _rb.linearVelocity = Vector2.zero;
     }
 
     private void Update()
     {
         _stateMachine.Update();
+        CheckHP();  
     }
 
     public void OnMove(InputAction.CallbackContext ctx)
@@ -109,6 +118,17 @@ public class PlayerController : MonoBehaviour
             CanMove = false;
             if(_AttckRoutine == null)
                 _AttckRoutine = StartCoroutine(FireBall());
+        }
+    }
+    
+    private void CheckHP()
+    {
+        if (HP <= 0)
+        {
+            DebugUtil.DebugingColor("Player Died!", "AA3A26");
+            isHit = true;
+            CanMove = false;
+            _rb.linearVelocity = Vector2.zero;
         }
     }
 
@@ -128,8 +148,10 @@ public class PlayerController : MonoBehaviour
     public void OnMouse(InputAction.CallbackContext ctx)
     {
         _mousePosition = ctx.ReadValue<Vector2>();
+        
         _mousePosition = new Vector2(_mousePosition.x - Screen.width/2f,
             _mousePosition.y - Screen.height/2f);
+        
         _mousePosition.Normalize();
         _direction = _mousePosition;
         PointDirection();
@@ -137,21 +159,72 @@ public class PlayerController : MonoBehaviour
 
     public void Movement()
     {
+        if(AttackInput)
+        {
+            _rb.linearVelocity = Vector2.zero;
+            IsMove = false;
+            return;
+        }
+        
         if (CanMove)
         {
             IsMove = true;
             
             _rb.linearVelocity = MoveInput * MoveSpeed;
         }
-        
     }
    
     private void PointDirection()
     {
         if (_mousePosition.x < 0)
-            transform.localScale = new Vector3(-1, 1, 1);
+            _playerSpriteRenderer.flipX = true;
+            // transform.localScale = new Vector3(-1, 1, 1);
         if (_mousePosition.x > 0)
-            transform.localScale = new Vector3(1, 1, 1);
+            _playerSpriteRenderer.flipX = false;
+            // transform.localScale = new Vector3(1, 1, 1);
+    }
+
+    public void StepSound()
+    {
+        if(_StepRoutine == null)
+            _StepRoutine = StartCoroutine(FootStep());
+    }
+
+    public void PlayerDamage(float damage)
+    {
+        if(CanHit)
+        {
+            HP -= damage;
+            isHit = true;
+            if(_hitRoutine == null)
+                _hitRoutine = StartCoroutine(HitDelay());
+        }
+        else
+        {
+            Debug.Log("무적 시간");
+        }
+        
+    }
+
+    private IEnumerator HitDelay()
+    {
+        CanMove = false;
+        yield return YieldContainer.Wait(0.18f);
+        isHit = false;
+        CanMove = true;
+        CanHit = true;
+        _hitRoutine = null;
+    }
+    
+    private IEnumerator FootStep()
+    {
+        _soundController.FootStep();
+        yield return YieldContainer.Wait(0.5f);
+        _StepRoutine = null;
+    }
+    public void ChangeState(IState state)
+    {
+        _stateMachine.ChangeState(state);
     }
     
     public IEnumerator FireBall()
@@ -166,23 +239,6 @@ public class PlayerController : MonoBehaviour
         
         AttackInput = false;
         _AttckRoutine = null;
-    }
-
-    public void StepSound()
-    {
-        if(_StepRoutine == null)
-            _StepRoutine = StartCoroutine(FootStep());
-    }
-    
-    private IEnumerator FootStep()
-    {
-        _soundController.FootStep();
-        yield return YieldContainer.Wait(0.5f);
-        _StepRoutine = null;
-    }
-    public void ChangeState(IState state)
-    {
-        _stateMachine.ChangeState(state);
     }
 
     private void Init()

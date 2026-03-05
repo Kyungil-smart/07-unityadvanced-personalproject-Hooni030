@@ -7,19 +7,17 @@ public class DeadState : IState
     public DeadState(PlayerController player)
     {
         _player = player;
-
     }
 
     public void Enter()
     {
+        _player.CanMove = false;
+        _player._animator.SetTrigger("Dead");
     }
 
     public void Update()
     {
-        if (_player.isDead)
-        {
-            _player.ChangeState(_player.Dead);
-        }
+        
     }
 
     public void Exit()
