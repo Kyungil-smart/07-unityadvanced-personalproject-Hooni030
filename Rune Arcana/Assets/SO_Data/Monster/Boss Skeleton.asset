@@ -17,5 +17,5 @@ MonoBehaviour:
   MoveSpeed: 1.5
   Attack_Damage: 35
   Detect_Range: 5
-  Attack_Range: 3.2
+  Attack_Range: 3
   Drop_Gold: 50

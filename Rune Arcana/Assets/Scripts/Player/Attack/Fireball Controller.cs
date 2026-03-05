@@ -31,7 +31,7 @@ public class FireballController : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        if (other.gameObject.CompareTag("Enemies"))
+        if (other.gameObject.CompareTag("Enemies") || other.gameObject.CompareTag("Boss"))
         {
             Destroy(gameObject, 0.2f);
         }
