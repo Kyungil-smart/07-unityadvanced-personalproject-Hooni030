@@ -16,13 +16,14 @@ public class Mon_MoveState : IState
 
     public void Update()
     {
+        Debug.Log(_monster._isHurt);
         if (_monster.HP <= 0)
             _monster.ChangeState(_monster.Dead);
         
         else if (_monster._canAttack)
             _monster.ChangeState(_monster.Attack);
         
-        else if (!_monster._canHurt)
+        else if (_monster._isHurt)
             _monster.ChangeState(_monster.Hurt);
         
         else if (!_monster._isMove)

@@ -43,7 +43,7 @@ public class MonsterControlller : MonoBehaviour
     public bool _canMove = true;
     public bool _isMove = false;
     public bool _canAttack = false;
-    public bool _canHurt = true;
+    public bool _isHurt = false;
 
     private void Awake()
     {
@@ -63,6 +63,7 @@ public class MonsterControlller : MonoBehaviour
     private void Update()
     {
         _stateMachine.Update();
+        CheckHP();
     }
 
     private void OnDrawGizmos()
@@ -72,12 +73,22 @@ public class MonsterControlller : MonoBehaviour
 
         Gizmos.color = Color.black;
         Gizmos.DrawWireSphere(transform.position, Range);
-
     }
-    
+
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.CompareTag("Attack") && !_isHurt && _HurtRoutine == null)
+        {
+            _isHurt = true;
+            _HurtRoutine = StartCoroutine(HurtDelay());
+            FireballController fireball = other.GetComponent<FireballController>();
+            HP -= fireball.Damage;
+            DebugUtil.DebugingColor($"스켈레톤 체력 : {HP}", "ff007f");
+        }
+    }
+
     private void OnTriggerStay2D(Collider2D other)
     {
-        Debug.Log("Attack!");
         if (other.CompareTag("Player"))
         {
             _rb.linearVelocity = Vector2.zero;
@@ -89,13 +100,6 @@ public class MonsterControlller : MonoBehaviour
                 _AttackRoutine = StartCoroutine(AttackPlayer());
             }
         }
-
-        if (other.CompareTag("Attack") && _canHurt)
-        {
-            FireballController fireball = other.GetComponent<FireballController>();
-            HP -= fireball.Damage;
-            DebugUtil.DebugingColor($"스켈레톤 체력 : {HP}", "Green");
-        }
     }
 
     private void OnTriggerExit2D(Collider2D other)
@@ -103,6 +107,16 @@ public class MonsterControlller : MonoBehaviour
         if (other.CompareTag("Player"))
         {
             _canAttack = false;
+        }
+    }
+
+    private void CheckHP()
+    {
+        if (HP <= 0)
+        {
+            _canMove = false;
+            _rb.linearVelocity = Vector2.zero;
+            Destroy(gameObject, 1.1f);
         }
     }
 
@@ -148,9 +162,11 @@ public class MonsterControlller : MonoBehaviour
 
     private IEnumerator HurtDelay()
     {
-        _canHurt = false;
-        yield return YieldContainer.Wait(1.5f);
-        _canHurt = true;
+        _canMove = false;
+        _rb.linearVelocity = Vector2.zero;
+        yield return YieldContainer.Wait(0.5f);
+        _isHurt = false;
+        _HurtRoutine = null;
     }
 
     
@@ -169,6 +185,7 @@ public class MonsterControlller : MonoBehaviour
         Move = new Mon_MoveState(this);
         Attack = new Mon_AttackState(this);
         Dead = new Mon_DeadState(this);
+        Hurt = new Mon_HurtState(this);
 
         Name = _monster.Name;
         HP = _monster.HP;

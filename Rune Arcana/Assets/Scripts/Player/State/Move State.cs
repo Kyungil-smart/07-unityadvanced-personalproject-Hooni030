@@ -20,6 +20,7 @@ public class MoveState : IState
 
     public void Update()
     {
+        _player.StepSound();
         // 움직임이 없으면 Idle 상태로 전환
         if (_player.MoveInput == Vector2.zero)
         {

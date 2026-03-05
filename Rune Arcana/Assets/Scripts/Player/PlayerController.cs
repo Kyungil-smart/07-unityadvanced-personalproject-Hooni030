@@ -140,12 +140,10 @@ public class PlayerController : MonoBehaviour
         if (CanMove)
         {
             IsMove = true;
-            if(_StepRoutine == null)
-                _StepRoutine = StartCoroutine(FootStep());
+            
             _rb.linearVelocity = MoveInput * MoveSpeed;
         }
-        else
-            StopCoroutine(FootStep());
+        
     }
    
     private void PointDirection()
@@ -169,11 +167,17 @@ public class PlayerController : MonoBehaviour
         AttackInput = false;
         _AttckRoutine = null;
     }
+
+    public void StepSound()
+    {
+        if(_StepRoutine == null)
+            _StepRoutine = StartCoroutine(FootStep());
+    }
     
     private IEnumerator FootStep()
     {
         _soundController.FootStep();
-        yield return YieldContainer.Wait(_stepInterval);
+        yield return YieldContainer.Wait(0.5f);
         _StepRoutine = null;
     }
     public void ChangeState(IState state)

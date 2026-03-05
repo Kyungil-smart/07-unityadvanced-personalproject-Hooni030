@@ -9,10 +9,15 @@ public class PlayerSoundController : MonoBehaviour
     {
         _source = GetComponent<AudioSource>();
     }
+    
+    private void Start()
+    {
+        _source.volume = 0.15f;
+    }
 
     public void FootStep()
     {
         _source.clip = _footStep[Random.Range(0, _footStep.Length)];
-        SoundManager.Instance.PlaySFX(_source, 0.15f);
+        _source.PlayOneShot(_source.clip);
     }
 }
