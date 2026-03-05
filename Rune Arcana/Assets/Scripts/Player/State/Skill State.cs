@@ -15,10 +15,6 @@ public class SkillState : IState
 
     public void Update()
     {
-        if (_player.SkillInput)
-        {
-            _player.ChangeState(_player.Skill);
-        }
     }
 
     public void Exit()

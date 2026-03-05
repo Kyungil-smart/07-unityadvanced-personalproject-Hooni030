@@ -1,25 +1,29 @@
 using System;
-using System.Drawing;
-using Unity.VisualScripting;
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
-using UnityEngine.Rendering.VirtualTexturing;
 
 public class PlayerController : MonoBehaviour
 {
+    private Coroutine _routine;
+    
     [Header("Get Components")]
     [SerializeField] private Player_Actions _playerActions;
+    [SerializeField] public Animator _animator;
     [SerializeField] private Rigidbody2D _rb;
     [SerializeField] private GameObject _playerSprite;
+    [SerializeField] private GameObject _fireballPrefab;
 
-    private StateMachine _stateMachine;
+    public StateMachine _stateMachine;
     public IdleState Idle { get; private set; }
     public MoveState Move { get; private set; }
     public AttackState Attack { get; private set; }
-    public SkillState Skill { get; private set; }
     public HitState Hit { get; private set; }
     public TeleportState Teleport { get; private set; }
     public DeadState Dead { get; private set; }
+
+    [SerializeField] Vector2 _mousePosition;
+    public Vector2 _direction = new Vector2();
 
     [Space(20)]
     [Header("Player Stats")]
@@ -34,11 +38,11 @@ public class PlayerController : MonoBehaviour
     public float Gold { get => _gold; set => _gold = value; }
     
     public Vector2 MoveInput { get; private set; }
+    public bool CanMove { get; set; } = true;
     public bool IsMove { get; set; }
-    public bool AttackInput { get; private set; }
-    public bool SkillInput { get; private set; }
+    public bool AttackInput { get; set; }
     public bool isHit { get; private set; }
-    public bool TeleInput { get; private set; }
+    public bool CanHit { get;private set; }
     public bool isDead { get; private set; }
     
     public bool InteractInput { get; private set; }
@@ -61,22 +65,19 @@ public class PlayerController : MonoBehaviour
         _playerActions.Player.Move.performed += OnMove;
         _playerActions.Player.Move.canceled += OnMove;
         _playerActions.Player.Attack.started += OnAttack;
-        _playerActions.Player.Skill.started += OnSkill;
-        _playerActions.Player.Teleport.started += OnTeleport;
         _playerActions.Player.Interact.started += OnInteract;
         _playerActions.Player.Interact.canceled += OnInteract;
+        _playerActions.Player.Mouse.performed += OnMouse;
     }
 
     private void OnDisable()
     {
-        _playerActions.Disable();
         _playerActions.Player.Move.performed -= OnMove;
         _playerActions.Player.Move.canceled -= OnMove;
         _playerActions.Player.Attack.started -= OnAttack;
-        _playerActions.Player.Skill.started -= OnSkill;
-        _playerActions.Player.Teleport.started -= OnTeleport;
         _playerActions.Player.Interact.started -= OnInteract;
         _playerActions.Player.Interact.canceled -= OnInteract;
+        _playerActions.Player.Mouse.performed -= OnMouse;
         
         _playerActions.Disable();
     }
@@ -84,6 +85,8 @@ public class PlayerController : MonoBehaviour
     private void FixedUpdate()
     {
         Movement();
+        if(AttackInput)
+            _rb.linearVelocity = Vector2.zero;
     }
 
     private void Update()
@@ -94,33 +97,16 @@ public class PlayerController : MonoBehaviour
     public void OnMove(InputAction.CallbackContext ctx)
     {
         MoveInput = ctx.ReadValue<Vector2>();
-        PointDirection();
-        IsMove = Math.Abs(MoveInput.x) + Math.Abs(MoveInput.y) > 0f ? true : false;
-        Debug.Log(IsMove);
-
     }
 
     public void OnAttack(InputAction.CallbackContext ctx)
     {
         if (ctx.started)
         {
-            DebugUtil.DebugingColor("Attack Activated", "f5ee5b");
-        }
-    }
-
-    public void OnSkill(InputAction.CallbackContext ctx)
-    {
-        if (ctx.started)
-        {
-            DebugUtil.DebugingColor("Skill Activated", "f5ee5b");
-        }
-    }
-
-    public void OnTeleport(InputAction.CallbackContext ctx)
-    {
-        if (ctx.started)
-        {
-            DebugUtil.DebugingColor("Avoid Activated", "f5ee5b");
+            AttackInput = true;
+            CanMove = false;
+            if(_routine == null)
+                _routine = StartCoroutine(FireBall());
         }
     }
 
@@ -139,10 +125,23 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    private void Movement()
+    public void OnMouse(InputAction.CallbackContext ctx)
     {
-        
-        _rb.linearVelocity = MoveInput * MoveSpeed;
+        _mousePosition = ctx.ReadValue<Vector2>();
+        _mousePosition = new Vector2(_mousePosition.x - Screen.width/2f,
+            _mousePosition.y - Screen.height/2f);
+        _mousePosition.Normalize();
+        _direction = _mousePosition;
+        PointDirection();
+    }
+
+    public void Movement()
+    {
+        if (CanMove)
+        {
+            IsMove = true;
+            _rb.linearVelocity = MoveInput * MoveSpeed;
+        }
     }
 
     private void Init()
@@ -157,7 +156,6 @@ public class PlayerController : MonoBehaviour
         Attack = new AttackState(this);
         Hit = new HitState(this);
         Dead = new DeadState(this);
-        Skill = new SkillState(this);
     }
 
     private void StatInit()
@@ -175,9 +173,23 @@ public class PlayerController : MonoBehaviour
 
     private void PointDirection()
     {
-        if (MoveInput.x < 0)
+        if (_mousePosition.x < 0)
             transform.localScale = new Vector3(-1, 1, 1);
-        if (MoveInput.x > 0)
+        if (_mousePosition.x > 0)
             transform.localScale = new Vector3(1, 1, 1);
+    }
+    
+    public IEnumerator FireBall()
+    {
+        yield return YieldContainer.Wait(0.28f);
+        
+        Vector2 ballDir = new Vector2(transform.position.x + _direction.x,
+            transform.position.y + _direction.y);
+        Instantiate(_fireballPrefab, ballDir, Quaternion.identity);
+        
+        yield return YieldContainer.Wait(0.28f);
+        
+        AttackInput = false;
+        _routine = null;
     }
 }

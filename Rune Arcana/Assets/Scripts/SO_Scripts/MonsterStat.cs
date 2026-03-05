@@ -1,7 +1,7 @@
 using UnityEngine;
 
 [CreateAssetMenu(fileName = "Monster", menuName = "Scriptable Objects/Monster")]
-public class Monster : ScriptableObject
+public class MonsterStat : ScriptableObject
 {
     public string Name;
     public float HP;
