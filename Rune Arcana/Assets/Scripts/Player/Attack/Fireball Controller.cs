@@ -11,6 +11,10 @@ public class FireballController : MonoBehaviour
     [SerializeField][Range(0f, 30f)] private float _speed;
     private Vector2 _direction;
 
+    [SerializeField] private float _damage;
+    public float Damage { get => _damage; private set => _damage = value; }
+    
+
     private void Awake()
     {
         _player = GameObject.FindWithTag("Player").GetComponent<PlayerController>();
@@ -21,10 +25,19 @@ public class FireballController : MonoBehaviour
     private void Start()
     {
         _direction = _player._direction;
+        _damage = _player.Damage;
         Destroy(gameObject, _lifeTime);
     }
 
-    private void Update()
+    private void OnTriggerEnter2D(Collider2D other)
+    {
+        if (other.gameObject.CompareTag("Enemies") || other.gameObject.CompareTag("Boss"))
+        {
+            Destroy(gameObject, 0.2f);
+        }
+    }
+
+    private void FixedUpdate()
     {
         _rb.linearVelocity = _direction * _speed;
     }

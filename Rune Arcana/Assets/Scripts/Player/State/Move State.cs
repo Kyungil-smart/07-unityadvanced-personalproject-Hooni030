@@ -15,24 +15,30 @@ public class MoveState : IState
     {
         _player.IsMove = true;
         _player.CanMove = true;
+        _player.isHit = false;
         _player._animator.SetBool(Move, true);
     }
 
     public void Update()
     {
+        _player.StepSound();
         // 움직임이 없으면 Idle 상태로 전환
         if (_player.MoveInput == Vector2.zero)
-        {
             _player.ChangeState(_player.Idle);
-        }
 
         if (_player.AttackInput)
-        {
             _player.ChangeState(_player.Attack);
-        }
+        
+        if(!_player.CanHit)
+            _player.ChangeState(_player.Hit);
+        
+        if (_player.isDead)
+            _player.ChangeState(_player.Dead);
     }
 
     public void Exit()
     {
+        _player.IsMove = false;
+        _player._animator.SetBool(Move, false);
     }
 }

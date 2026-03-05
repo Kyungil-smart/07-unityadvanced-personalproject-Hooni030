@@ -11,24 +11,24 @@ public class Mon_IdleState : IState
     
     public void Enter()
     {
-        _monster._canMove = true;
-        _monster._isMove = false;
+        _monster.canMove = true;
+        _monster.isMove = false;
     }
 
     public void Update()
     {
-        if (_monster._isMove)
-        {
-            _monster.ChangeState(_monster.Move);
-        }
-        if (_monster._canAttack)
-        {
-            _monster.ChangeState(_monster.Attack);
-        }
-        if(_monster.HP < 0)
-        {
+        if(_monster.HP <= 0)
             _monster.ChangeState(_monster.Dead);
-        }
+        
+        if (_monster.attack)
+            _monster.ChangeState(_monster.Attack);
+        
+        if (_monster.isHurt)
+            _monster.ChangeState(_monster.Hurt);
+        
+        if (_monster.isMove)
+            _monster.ChangeState(_monster.Move);
+        
     }
 
     public void Exit()

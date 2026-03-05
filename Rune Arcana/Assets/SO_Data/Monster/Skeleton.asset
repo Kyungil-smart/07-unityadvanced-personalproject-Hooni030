@@ -15,6 +15,7 @@ MonoBehaviour:
   Name: "\uC2A4\uCF08\uB808\uD1A4"
   HP: 100
   MoveSpeed: 1
-  Attack_Damage: 3
-  Attack_Range: 1
+  Attack_Damage: 15
+  Detect_Range: 7
+  Attack_Range: 1.414
   Drop_Gold: 50

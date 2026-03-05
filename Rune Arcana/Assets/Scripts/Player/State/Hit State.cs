@@ -11,17 +11,21 @@ public class HitState : IState
     
     public void Enter()
     {
+        _player.CanMove = false;
+        _player._animator.SetTrigger("Hit");
     }
 
     public void Update()
     {
-        if (_player.isHit)
-        {
-            _player.ChangeState(_player.Hit);
-        }
+        if(!_player.IsMove)
+            _player.ChangeState(_player.Idle);
+        
+        if(_player.isDead)
+            _player.ChangeState(_player.Dead);
     }
 
     public void Exit()
     {
+        _player.CanMove = true;
     }
 }

@@ -10,6 +10,10 @@ public class Mon_DeadState : IState
     }
     public void Enter()
     {
+        Debug.Log("몬스터 사망");
+        _monster.canMove = false;
+        _monster.isHurt = true;
+        _monster._animator.SetTrigger("Death");
     }
 
     public void Update()

@@ -6,7 +6,7 @@ public class StateMachine
 
     public void ChangeState(IState state)
     {
-        state?.Exit();
+        _currentState?.Exit();
         _currentState = state;
         state?.Enter();
     }

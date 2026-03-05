@@ -27,12 +27,18 @@ public class AttackState : IState
         _player._animator.SetBool(Attack, false);
         
         if (!_player.AttackInput)
-        {
             _player.ChangeState(_player.Idle);
-        }
+        
+        if(!_player.CanHit)
+            _player.ChangeState(_player.Hit);
+        
+        if(_player.isDead)
+            _player.ChangeState(_player.Dead);
     }
 
     public void Exit()
     {
+        _player._animator.SetBool(Attack, false);
+        _player.CanMove = true;
     }
 }

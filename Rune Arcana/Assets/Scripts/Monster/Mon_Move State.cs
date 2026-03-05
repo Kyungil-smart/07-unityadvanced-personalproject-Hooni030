@@ -10,18 +10,21 @@ public class Mon_MoveState : IState
     }
     public void Enter()
     {
-        _monster._isMove = true;
+        _monster.isMove = true;
         _monster._animator.SetBool("Move", true);
     }
 
     public void Update()
     {
-        if (!_monster._isMove)
-            _monster.ChangeState(_monster.Idle);
-        else if (_monster._canAttack)
-            _monster.ChangeState(_monster.Attack);
+        _monster.StepSound();
         if (_monster.HP <= 0)
             _monster.ChangeState(_monster.Dead);
+        
+        if (_monster.attack)
+            _monster.ChangeState(_monster.Attack);
+        
+        if (_monster.isHurt)
+            _monster.ChangeState(_monster.Hurt);
     }
 
     public void Exit()
