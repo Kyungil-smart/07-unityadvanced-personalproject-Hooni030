@@ -20,10 +20,7 @@ public class Mon_AttackState : IState
         {
             _monster.ChangeState(_monster.Move);
         }
-        else if (!_monster._isMove)
-        {
-            _monster.ChangeState(_monster.Idle);
-        }
+        
     }
 
     public void Exit()

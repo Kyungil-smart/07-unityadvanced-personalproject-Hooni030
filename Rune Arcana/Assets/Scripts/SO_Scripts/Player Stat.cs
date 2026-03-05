@@ -4,7 +4,6 @@ using UnityEngine;
 public class PlayerStat : ScriptableObject
 {
     public float HP;
+    public float Damage;
     public float MoveSpeed;
-    public float AvoidDistance;
-    public float Gold;
 }

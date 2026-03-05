@@ -23,19 +23,19 @@ public class PlayerController : MonoBehaviour
     public DeadState Dead { get; private set; }
 
     [SerializeField] Vector2 _mousePosition;
-    public Vector2 _direction = new Vector2();
+    public Vector2 _direction;
 
     [Space(20)]
     [Header("Player Stats")]
     [SerializeField] private PlayerStat _playerStat;
     [SerializeField] private float _hp;
     public float HP { get => _hp; set => _hp = value; }
+    [SerializeField] private float _Damage;
+    public float Damage { get => _Damage; set => _Damage = value; }
     [SerializeField] private float _moveSpeed;
     public float MoveSpeed { get => _moveSpeed; set => _moveSpeed = value; }
-    [SerializeField] private float _avoidDistance;
-    public float AvoidDistance { get => _avoidDistance; set => _avoidDistance = value; }
-    [SerializeField] private float _gold;
-    public float Gold { get => _gold; set => _gold = value; }
+    
+    
     
     public Vector2 MoveInput { get; private set; }
     public bool CanMove { get; set; } = true;
@@ -115,13 +115,11 @@ public class PlayerController : MonoBehaviour
         if (ctx.started)
         {
             InteractInput = true;
-            Debug.Log(InteractInput);
         }
 
         if (ctx.canceled)
         {
             InteractInput = false;
-            Debug.Log(InteractInput);
         }
     }
 
@@ -143,34 +141,7 @@ public class PlayerController : MonoBehaviour
             _rb.linearVelocity = MoveInput * MoveSpeed;
         }
     }
-
-    private void Init()
-    {
-        _rb = GetComponent<Rigidbody2D>();
-        
-        _stateMachine = new StateMachine();
-        _playerActions = new Player_Actions();
-        
-        Idle = new IdleState(this);
-        Move = new MoveState(this);
-        Attack = new AttackState(this);
-        Hit = new HitState(this);
-        Dead = new DeadState(this);
-    }
-
-    private void StatInit()
-    {
-        HP = _playerStat.HP;
-        MoveSpeed = _playerStat.MoveSpeed;
-        AvoidDistance = _playerStat.AvoidDistance;
-        Gold = _playerStat.Gold;
-    }
-
-    public void ChangeState(IState state)
-    {
-        _stateMachine.ChangeState(state);
-    }
-
+   
     private void PointDirection()
     {
         if (_mousePosition.x < 0)
@@ -191,5 +162,30 @@ public class PlayerController : MonoBehaviour
         
         AttackInput = false;
         _routine = null;
+    }
+    public void ChangeState(IState state)
+    {
+        _stateMachine.ChangeState(state);
+    }
+
+    private void Init()
+    {
+        _rb = GetComponent<Rigidbody2D>();
+        
+        _stateMachine = new StateMachine();
+        _playerActions = new Player_Actions();
+        
+        Idle = new IdleState(this);
+        Move = new MoveState(this);
+        Attack = new AttackState(this);
+        Hit = new HitState(this);
+        Dead = new DeadState(this);
+    }
+
+    private void StatInit()
+    {
+        HP = _playerStat.HP;
+        Damage = _playerStat.Damage;
+        MoveSpeed = _playerStat.MoveSpeed;
     }
 }
