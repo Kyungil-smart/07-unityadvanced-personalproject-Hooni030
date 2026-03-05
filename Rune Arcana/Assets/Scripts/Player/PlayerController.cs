@@ -14,10 +14,12 @@ public class PlayerController : MonoBehaviour
     [SerializeField] private Player_Actions _playerActions;
     [SerializeField] public Animator _animator;
     [SerializeField] private Rigidbody2D _rb;
+    [SerializeField] private CapsuleCollider2D _capsule;
     [SerializeField] private GameObject _playerSprite;
     [SerializeField] private GameObject _fireballPrefab;
     [SerializeField] private SpriteRenderer _playerSpriteRenderer;
     [SerializeField] private PlayerSoundController _soundController;
+    [SerializeField] private ChangeScene _changeScene;
 
     public StateMachine _stateMachine;
     public IdleState Idle { get; private set; }
@@ -57,6 +59,7 @@ public class PlayerController : MonoBehaviour
     public bool CanHit { get; set; } = true;
     public bool isHit { get; set; }
     public bool isDead { get; set; }
+    public bool CanAttack { get; set; } = true;
     
     public bool InteractInput { get; private set; }
 
@@ -103,7 +106,6 @@ public class PlayerController : MonoBehaviour
     private void Update()
     {
         _stateMachine.Update();
-        DebugUtil.DebugingColor($"{_stateMachine._currentState}", "D9FF2F");
         CheckHP();  
     }
 
@@ -114,7 +116,7 @@ public class PlayerController : MonoBehaviour
 
     public void OnAttack(InputAction.CallbackContext ctx)
     {
-        if (ctx.started)
+        if (ctx.started && CanAttack)
         {
             AttackInput = true;
             CanMove = false;
@@ -125,12 +127,16 @@ public class PlayerController : MonoBehaviour
     
     private void CheckHP()
     {
-        if (HP <= 0)
+        if (HP <= 0 && !isDead)
         {
-            DebugUtil.DebugingColor("Player Died!", "AA3A26");
-            isHit = true;
-            CanMove = false;
             _rb.linearVelocity = Vector2.zero;
+            DebugUtil.DebugingColor("Player Died!", "AA3A26");
+            CanMove = false;
+            IsMove = false;
+            isDead = true;
+            _capsule.enabled = false;
+            _soundController.PlayerDeathSound();
+            _changeScene.TurnOffScene(4, 1);
         }
     }
 
@@ -253,6 +259,7 @@ public class PlayerController : MonoBehaviour
     {
         _rb = GetComponent<Rigidbody2D>();
         _soundController = GetComponent<PlayerSoundController>();
+        _capsule = GetComponent<CapsuleCollider2D>();
         
         _stateMachine = new StateMachine();
         _playerActions = new Player_Actions();

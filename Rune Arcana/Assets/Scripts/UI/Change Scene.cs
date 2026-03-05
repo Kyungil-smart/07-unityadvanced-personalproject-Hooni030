@@ -34,6 +34,10 @@ public class ChangeScene : MonoBehaviour
     {
         StartCoroutine(OffScene(_outTime, index));
     }
+    public void TurnOffScene(float time, int index)
+    {
+        StartCoroutine(OffScene(time, index));
+    }
     
     private void OnDisable()
     {

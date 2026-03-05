@@ -9,6 +9,8 @@ public class PlayerSoundController : MonoBehaviour
     [SerializeField] private float _fireballVolume;
     [SerializeField] private AudioClip _playerHit;
     [SerializeField] private float _playerHitVolume;
+    [SerializeField] private AudioClip _playerDeath;
+    [SerializeField] private float _playerDeathVolume;
 
     private void Awake()
     {
@@ -33,6 +35,13 @@ public class PlayerSoundController : MonoBehaviour
     {
         _source.clip = _playerHit;
         _source.volume = _playerHitVolume;
+        _source.PlayOneShot(_source.clip);
+    }
+
+    public void PlayerDeathSound()
+    {
+        _source.clip = _playerDeath;
+        _source.volume = _playerDeathVolume;
         _source.PlayOneShot(_source.clip);
     }
 }

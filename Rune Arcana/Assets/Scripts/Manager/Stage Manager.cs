@@ -7,6 +7,7 @@ public class StageManager : MonoBehaviour
     [SerializeField] private AudioSource _stageSound;
     [SerializeField] private AudioClip[] _stageSounds;
     [SerializeField][Range(0f, 1.0f)] private float _volume;
+    [SerializeField] private PlayerController _playerController;
     
     [SerializeField] private List<GameObject> _monsters;
     
@@ -33,6 +34,10 @@ public class StageManager : MonoBehaviour
     {
         CheckMonsterCount();
         KillAllMonsters();
+        if (_playerController.isDead)
+        {
+            _stageSound.Stop();
+        }
     }
 
     private void KillAllMonsters()

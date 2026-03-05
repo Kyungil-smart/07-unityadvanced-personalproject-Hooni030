@@ -49,7 +49,7 @@ MonoBehaviour:
   _stageSounds:
   - {fileID: 8300000, guid: 8cbae1cf3368d104d988dad6b2e92ede, type: 3}
   - {fileID: 8300000, guid: 14a1cf915de1c2448b200ab123c01445, type: 3}
-  _volume: 0.2
+  _volume: 0.1
   _monsters: []
   _bossPrefab: {fileID: 0}
   _monsterCount: 0
@@ -75,7 +75,7 @@ AudioSource:
   SpatializePostEffects: 0
   Priority: 128
   DopplerLevel: 1
-  MinDistance: 1
+  MinDistance: 66.84
   MaxDistance: 500
   Pan2D: 0
   rolloffMode: 0
