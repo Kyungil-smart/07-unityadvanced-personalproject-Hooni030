@@ -77,6 +77,76 @@
 
 ---
 
+## 아키텍처 개요
+
+이 프로젝트는 Title/Town/Stage 씬 흐름을 가진다.  
+입력은 New Input System 기반으로 처리한다.  
+전투는 PlayerController가 투사체를 생성하고, 투사체가 적과 충돌하면 적의 HP를 감소시키는 구조이다.  
+씬 전환은 UI 애니메이션(페이드) 후 GameSceneManager가 처리한다.
+
+---
+
+## 클래스 참조 관계
+
+### 핵심 매니저
+
+- GameManager → GameSceneManager, SoundManager를 생성하고 DontDestroyOnLoad로 유지한다.
+- GameSceneManager → 씬 로드/전환과 종료를 담당한다.
+- SoundManager → UI/플레이어/몬스터에서 SFX 재생을 담당한다.
+
+### UI/씬 전환
+
+- TitleUIController → SoundManager를 사용해 UI 효과음을 재생한다.
+- ChangeScene → GameSceneManager를 호출해 페이드 후 씬을 전환한다.
+- BookDescription → 책 UI의 HowTo/Credits 토글 애니메이션을 담당한다.
+
+### 월드 오브젝트(마을/환경)
+
+- ObeliskController → PlayerController의 InteractInput을 읽고 ChangeScene으로 스테이지 진입을 트리거한다.
+- BridgeController → TilemapCollider2D(강) 콜라이더를 On/Off 한다.
+- PropsController → Player 위치에 따라 SpriteRenderer sortingLayerName을 변경한다.
+- CampfireController → Light2D를 조절해 불빛 흔들림을 연출한다.
+
+### 플레이어/전투
+
+- PlayerController
+  - Player_Actions(입력)과 Rigidbody2D(이동)를 사용한다.
+  - PlayerSoundController로 발사/발걸음 사운드를 재생한다.
+  - 공격 시 Fireball 프리팹을 Instantiate 한다.
+  - StateMachine과 Idle/Move/Attack 상태를 가진다.
+- FireballController
+  - PlayerController의 방향/데미지를 참조해 이동과 피해량을 결정한다.
+  - 적/보스 태그 충돌 시 일정 시간 후 파괴한다.
+
+### 몬스터
+
+- MonsterControlller
+  - Player를 타겟으로 추적 이동한다.
+  - Raycast로 플레이어를 판정하고 피해를 준다.
+  - MonsterStat(ScriptableObject)로 스탯을 초기화한다.
+  - MonsterSoundController로 피격/공격 사운드를 재생한다.
+  - StateMachine과 Idle/Move/Attack/Hurt/Dead 상태를 가진다.
+
+---
+
+## 전투 흐름 요약
+
+1. PlayerController가 Attack 입력을 받는다.
+2. FireBall 코루틴에서 Fireball 프리팹을 생성한다.
+3. FireballController가 방향 벡터로 linearVelocity를 적용한다.
+4. Fireball이 적(Collider2D)과 충돌하면 몬스터 HP가 감소한다.
+5. 몬스터 HP가 0 이하가 되면 사망 처리 후 제거한다.
+
+---
+
+## 데이터(ScriptableObject)
+
+- PlayerStat: HP, Damage, MoveSpeed 등을 가진다.
+- MonsterStat: HP, MoveSpeed, Attack_Range, Attack_Damage 등을 가진다.
+- 스탯은 코드와 분리되어 Inspector에서 밸런싱한다.
+
+---
+
 ## 폴더 구조
 
 - Assets/Scripts/
