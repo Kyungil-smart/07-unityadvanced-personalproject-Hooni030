@@ -3,7 +3,7 @@
 
 # Rune Arcana
 
-![Title](Rune%20Arcana\Assets\Resources\UI\Main%20Title.png)
+![Title](Rune%20Arcana/Assets/Resources/UI/Main%20Title.png)
 
 탑다운 2D 액션 게임이다.  
 마을에서 상호작용으로 스테이지에 진입하고, 스테이지를 탐색하며 전투를 진행한다.
