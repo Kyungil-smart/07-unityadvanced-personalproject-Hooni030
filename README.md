@@ -47,6 +47,7 @@
 
 ### 플레이어
 ![TitleScene](./picture/StageScene.png)
+![TitleScene](Picture\StageScene.png)
 - Rigidbody2D 기반 탑다운 이동.
 - Idle / Move 애니메이션 적용.
 - 마우스 조준 기반 투사체 발사(화염구).
