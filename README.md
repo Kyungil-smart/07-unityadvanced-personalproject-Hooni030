@@ -40,13 +40,13 @@
 ## 구현 기능
 
 ### UI / 씬 전환
-![TitleScene](/picture/TitleScene.png)
+![TitleScene](./picture/TitleScene.png)
 - 타이틀 UI 구성.
 - 버튼 클릭 기반 씬 전환.
 - 페이드 애니메이션을 활용한 전환 연출.
 
 ### 플레이어
-![TitleScene](/picture/StageScene.png)
+![TitleScene](./picture/StageScene.png)
 - Rigidbody2D 기반 탑다운 이동.
 - Idle / Move 애니메이션 적용.
 - 마우스 조준 기반 투사체 발사(화염구).
@@ -63,7 +63,7 @@
 - 공격 범위/데미지 스탯 기반 처리.
 
 ### 환경/연출
-![TitleScene](/picture/TownScene.png)
+![TitleScene](./picture/TownScene.png)
 - Sorting Layer 제어로 전경/후경 표현.
 - Light2D 기반 캠프파이어 불빛 연출.
 
